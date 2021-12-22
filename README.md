@@ -1,5 +1,7 @@
 # typeform-dotnet
 
+A .NET SDK wrapper built with [Refit](https://github.com/reactiveui/refit) around Typeform's API.
+
 ## Usage
 
 ### Create API client
@@ -51,6 +53,9 @@ public class HomeController : Controller {
 
 - [x] Create a basic API client
 - [x] Support for passing in an access token
+- [ ] Nuget package flow
+- [ ] Github CI for tests / build / publish
+- [ ] Target .NET Standard / maximize compatibility
 - [ ] Support for [Responses API](https://developer.typeform.com/responses/)
   - [ ] [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
   - [ ] [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
