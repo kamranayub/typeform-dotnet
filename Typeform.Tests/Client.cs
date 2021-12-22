@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace Typeform.Tests;
 
 public class ClientTests
