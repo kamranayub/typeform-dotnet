@@ -90,6 +90,15 @@ public class AnswerDeserializationTests
     Assert.Equal(expectedUri, answer.FileUrl);
   }
 
+  public void Deserializes_Answer_Url_Field()
+  {
+    var answer = GetAnswerFromFixture<TypeformUrlAnswer>(15);
+    var expectedUri = new Uri("https://www.google.com");
+
+    Assert.Equal(AnswerType.Url, answer.Type);
+    Assert.Equal(expectedUri, answer.Url);
+  }
+
   [Fact]
   public void Falls_Back_When_Deserializing_Unknown_Answer_Field()
   {

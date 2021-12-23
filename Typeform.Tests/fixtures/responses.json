@@ -144,6 +144,15 @@
             "type": "multiple_choice"
           },
           "type": "choice"
+        },
+        {
+          "url": "https://www.google.com",
+          "field": {
+            "id": "KoJxDM3c6x8h",
+            "ref": "test_url_reference",
+            "type": "website"
+          },
+          "type": "url"
         }
       ],
       "calculated": {

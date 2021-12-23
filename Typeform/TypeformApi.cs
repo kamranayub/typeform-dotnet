@@ -151,12 +151,12 @@ public class TypeformEmailAnswer : TypeformAnswer
 
 public class TypeformFileUrlAnswer : TypeformAnswer
 {
-
-  /// <summary>
-  /// TODO: Use Uri?
-  /// </summary>
-  /// <value></value>
   public Uri FileUrl { get; set; }
+}
+
+public class TypeformUrlAnswer : TypeformAnswer
+{
+  public Uri Url { get; set; }
 }
 
 public class TypeformNumberAnswer : TypeformAnswer

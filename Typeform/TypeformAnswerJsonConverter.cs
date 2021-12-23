@@ -57,6 +57,9 @@ namespace Typeform
           case AnswerType.Email:
             answerInstanceType = typeof(TypeformEmailAnswer);
             break;
+          case AnswerType.Url:
+            answerInstanceType = typeof(TypeformUrlAnswer);
+            break;
           case AnswerType.FileUrl:
             answerInstanceType = typeof(TypeformFileUrlAnswer);
             break;
