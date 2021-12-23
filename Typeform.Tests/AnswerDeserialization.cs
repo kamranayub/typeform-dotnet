@@ -72,6 +72,15 @@ public class AnswerDeserializationTests
     Assert.Equal(expectedDate, answer.Date);
   }
 
+  public void Deserializes_Answer_Choice_Field()
+  {
+    var answer = GetAnswerFromFixture<TypeformChoiceAnswer>(12);
+
+    Assert.Equal(AnswerType.Choice, answer.Type);
+    Assert.NotNull(answer.Choice);
+    Assert.Equal("A friend's experience in Sydney", answer.Choice.Label);
+  }
+
   [Fact]
   public void Falls_Back_When_Deserializing_Unknown_Answer_Field()
   {

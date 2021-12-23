@@ -159,11 +159,6 @@ public class TypeformChoicesAnswer : TypeformAnswer
   public TypeformChoicesLabels Choices { get; set; }
 }
 
-public class TypeformDateAnswer : TypeformAnswer
-{
-  public DateTime Date { get; set; }
-}
-
 public class TypeformChoicesLabels
 {
   public TypeformChoicesLabels()
@@ -171,6 +166,21 @@ public class TypeformChoicesLabels
     Labels = new List<string>();
   }
   public IList<string> Labels { get; set; }
+}
+
+public class TypeformChoiceAnswer : TypeformAnswer
+{
+  public TypeformChoiceLabel Choice { get; set; }
+}
+
+public class TypeformChoiceLabel
+{
+  public string Label { get; set; }
+}
+
+public class TypeformDateAnswer : TypeformAnswer
+{
+  public DateTime Date { get; set; }
 }
 
 public class TypeformAnswerField
