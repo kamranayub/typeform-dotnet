@@ -27,4 +27,10 @@
     <ProjectReference Include="..\Typeform\Typeform.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="fixtures\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
+
 </Project>

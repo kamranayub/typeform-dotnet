@@ -51,7 +51,7 @@ public class TypeformResponsesContainer
   /// Array of Typeform Response objects
   /// </summary>
   /// <value></value>
-  public ICollection<TypeformResponse> Items { get; set; }
+  public IList<TypeformResponse> Items { get; set; }
 }
 
 public class TypeformResponse
@@ -61,7 +61,7 @@ public class TypeformResponse
     Answers = new List<TypeformAnswer>();
   }
 
-  public ICollection<TypeformAnswer> Answers { get; set; }
+  public IList<TypeformAnswer> Answers { get; set; }
 }
 
 public struct TypeformAnswer

@@ -1,4 +1,5 @@
-﻿using JorgeSerrano.Json;
+﻿using System.Text.Json;
+using JorgeSerrano.Json;
 
 namespace Typeform;
 
@@ -10,10 +11,12 @@ public class TypeformClient
   /// <value></value>
   public static RefitSettings DefaultSettings => new RefitSettings
   {
-    ContentSerializer = new SystemTextJsonContentSerializer(new System.Text.Json.JsonSerializerOptions()
-    {
-      PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
-    })
+    ContentSerializer = new SystemTextJsonContentSerializer(DefaultSystemTextJsonSerializerOptions)
+  };
+
+  public static JsonSerializerOptions DefaultSystemTextJsonSerializerOptions => new System.Text.Json.JsonSerializerOptions()
+  {
+    PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
   };
 
   public static ITypeformApi CreateApi()
