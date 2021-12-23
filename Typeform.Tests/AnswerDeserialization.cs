@@ -21,6 +21,15 @@ public class AnswerDeserializationTests
     Assert.Equal("Job opportunities", textAnswer.Text);
   }
 
+  [Fact]
+  public void Falls_Back_When_Deserializing_Unknown_Answer_Field()
+  {
+    var responsesFixture = GetResponsesFixture();
+    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+
+    Assert.Equal(AnswerType.Unknown, responses!.Items[0].Answers[0].Type);
+  }
+
   private string GetResponsesFixture()
   {
     return System.IO.File.ReadAllText("fixtures/responses.json");

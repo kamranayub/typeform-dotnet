@@ -77,6 +77,7 @@ public class AnswerList : List<TypeformAnswer> {
 }
 
 public enum AnswerType {
+  Unknown,
   Text,
   Choice,
   Choices,
