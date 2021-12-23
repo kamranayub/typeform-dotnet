@@ -5,62 +5,56 @@ namespace Typeform.Tests;
 
 public class AnswerDeserializationTests
 {
+  private T GetAnswerFromFixture<T>(int index) where T : TypeformAnswer
+  {
+    var responsesFixture = GetResponsesFixture();
+    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+
+    return responses!.Items[0].Answers.GetAnswer<T>(index);
+  }
 
   [Fact]
   public void Deserializes_Answer_Text_Field()
   {
-    var responsesFixture = GetResponsesFixture();
-    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+    var answer = GetAnswerFromFixture<TypeformTextAnswer>(0);
 
-    Assert.Equal(AnswerType.Text, responses!.Items[0].Answers[0].Type);
-    var textAnswer = responses.Items[0].Answers.GetAnswer<TypeformTextAnswer>(0);
-    Assert.NotNull(textAnswer);
-    Assert.Equal("Job opportunities", textAnswer.Text);
-  }
-
-  [Fact]
-  public void Deserializes_Answer_Email_Field()
-  {
-    var responsesFixture = GetResponsesFixture();
-    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
-
-    Assert.Equal(AnswerType.Email, responses!.Items[0].Answers[4].Type);
-    var emailAnswer = responses.Items[0].Answers.GetAnswer<TypeformEmailAnswer>(4);
-    Assert.NotNull(emailAnswer);
-    Assert.Equal("lian1078@other.com", emailAnswer.Email);
-  }
-
-  [Fact]
-  public void Deserializes_Answer_Number_Field()
-  {
-    var responsesFixture = GetResponsesFixture();
-    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
-
-    Assert.Equal(AnswerType.Number, responses!.Items[0].Answers[5].Type);
-    var numberAnswer = responses.Items[0].Answers.GetAnswer<TypeformNumberAnswer>(5);
-    Assert.NotNull(numberAnswer);
-    Assert.Equal(1, numberAnswer.Number);
+    Assert.Equal(AnswerType.Text, answer.Type);
+    Assert.Equal("Job opportunities", answer.Text);
   }
 
   [Fact]
   public void Deserializes_Answer_Boolean_Field()
   {
-    var responsesFixture = GetResponsesFixture();
-    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+    var answer = GetAnswerFromFixture<TypeformBooleanAnswer>(1);
+    
+    Assert.Equal(AnswerType.Boolean, answer.Type);
+    Assert.False(answer.Boolean);
+  }
 
-    Assert.Equal(AnswerType.Boolean, responses!.Items[0].Answers[1].Type);
-    var booleanAnswer = responses.Items[0].Answers.GetAnswer<TypeformBooleanAnswer>(1);
-    Assert.NotNull(booleanAnswer);
-    Assert.False(booleanAnswer.Boolean);
+  [Fact]
+  public void Deserializes_Answer_Email_Field()
+  {
+    var answer = GetAnswerFromFixture<TypeformEmailAnswer>(4);
+    
+    Assert.Equal(AnswerType.Email, answer.Type);
+    Assert.Equal("lian1078@other.com", answer.Email);
+  }
+
+  [Fact]
+  public void Deserializes_Answer_Number_Field()
+  {
+    var answer = GetAnswerFromFixture<TypeformNumberAnswer>(5);
+    
+    Assert.Equal(AnswerType.Number, answer.Type);
+    Assert.Equal(1, answer.Number);
   }
 
   [Fact]
   public void Falls_Back_When_Deserializing_Unknown_Answer_Field()
   {
-    var responsesFixture = GetResponsesFixture();
-    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
-
-    Assert.Equal(AnswerType.Unknown, responses!.Items[0].Answers[2].Type);
+    var answer = GetAnswerFromFixture<TypeformAnswer>(2);
+    
+    Assert.Equal(AnswerType.Unknown, answer.Type);
   }
 
   private string GetResponsesFixture()
