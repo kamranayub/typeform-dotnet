@@ -6,10 +6,12 @@ namespace Typeform
 
   public class TypeformClient
   {
-  public static JsonSerializerOptions DefaultSystemTextJsonSerializerOptions => new JsonSerializerOptions()
-  {
-    PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
-  };
+    public static JsonSerializerOptions DefaultSystemTextJsonSerializerOptions => new JsonSerializerOptions()
+    {
+      PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
+      Converters = { new TypeformAnswerJsonConverter() }
+    };
+
     /// <summary>
     /// Note: Doesn't make sense for consumers to override naming policy!
     /// </summary>

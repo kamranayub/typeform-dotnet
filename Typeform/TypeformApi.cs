@@ -71,7 +71,7 @@ public class TypeformResponse
 }
 
 public class AnswerList : List<TypeformAnswer> {
-  public T Get<T>(int index) where T : TypeformAnswer {
+  public T GetAnswer<T>(int index) where T : TypeformAnswer {
     return (T)this[index];
   }
 }
