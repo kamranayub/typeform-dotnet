@@ -1,28 +1,34 @@
-namespace Typeform;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Refit;
 
-public interface ITypeformApi
+namespace Typeform
 {
-  /// <summary>
-  /// Typeform Responses API
-  /// </summary>
-  /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
-  /// <returns></returns>
-  [Get("/forms/{form_id}/responses")]
-  Task<TypeformResponsesContainer> GetFormResponsesAsync(
-    [Authorize("Bearer")] string accessToken,
-    [AliasAs("form_id")] string formId);
 
-  /// <summary>
-  /// Typeform Responses API
-  /// </summary>
-  /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
-  /// <param name="queryParams">Optional query parameters to pass to Responses endpoint</param>
-  /// <returns></returns>
-  [Get("/forms/{form_id}/responses")]
-  Task<TypeformResponsesContainer> GetFormResponsesAsync(
-    [Authorize("Bearer")] string accessToken,
-    [AliasAs("form_id")] string formId,
-    TypeformResponsesParameters queryParams);
+  public interface ITypeformApi
+  {
+    /// <summary>
+    /// Typeform Responses API
+    /// </summary>
+    /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
+    /// <returns></returns>
+    [Get("/forms/{form_id}/responses")]
+    Task<TypeformResponsesContainer> GetFormResponsesAsync(
+      [Authorize("Bearer")] string accessToken,
+      [AliasAs("form_id")] string formId);
+
+    /// <summary>
+    /// Typeform Responses API
+    /// </summary>
+    /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
+    /// <param name="queryParams">Optional query parameters to pass to Responses endpoint</param>
+    /// <returns></returns>
+    [Get("/forms/{form_id}/responses")]
+    Task<TypeformResponsesContainer> GetFormResponsesAsync(
+      [Authorize("Bearer")] string accessToken,
+      [AliasAs("form_id")] string formId,
+      TypeformResponsesParameters queryParams);
+  }
 }
 
 public class TypeformResponsesContainer
@@ -96,7 +102,7 @@ public class TypeformResponsesParameters
   /// to the second, with T as a delimiter between the date and time (2020-03-20T14:00:59).
   /// </summary>
   /// <value></value>
-  public string? Since { get; set; }
+  public string Since { get; set; }
 
   /// <summary>
   /// Limit request to responses submitted until the specified date and time. 
@@ -104,7 +110,7 @@ public class TypeformResponsesParameters
   /// to the second, with T as a delimiter between the date and time (2020-03-20T14:00:59).
   /// </summary>
   /// <value></value>
-  public string? Until { get; set; }
+  public string Until { get; set; }
 
   /// <summary>
   /// Limit request to responses submitted after the specified token. Could 
@@ -113,7 +119,7 @@ public class TypeformResponsesParameters
   /// that you can traverse the complete set of responses without repeating entries.
   /// </summary>
   /// <value></value>
-  public string? After { get; set; }
+  public string After { get; set; }
 
   /// <summary>
   /// Limit request to responses submitted before the specified token. Could 
@@ -122,20 +128,20 @@ public class TypeformResponsesParameters
   /// you can traverse the complete set of responses without repeating entries.
   /// </summary>
   /// <value></value>
-  public string? Before { get; set; }
+  public string Before { get; set; }
 
   /// <summary>
   /// Limit request to the specified response_id values. 
   /// Use a comma-separated list to specify more than one response_id value.
   /// </summary>
   /// <value></value>
-  public string[]? IncludedResponseIds { get; set; }
+  public string[] IncludedResponseIds { get; set; }
 
   /// <summary>
   /// Comma-separated list of response_ids to be excluded from the response.
   /// </summary>
   /// <value></value>
-  public string[]? ExcludedResponseIds { get; set; }
+  public string[] ExcludedResponseIds { get; set; }
 
   /// <summary>
   /// Limit responses only to those which were submitted. This parameter 
@@ -143,7 +149,7 @@ public class TypeformResponsesParameters
   /// submitted_at, otherwise - landed_at.
   /// </summary>
   /// <value></value>
-  public bool? Completed { get; set; }
+  public bool Completed { get; set; }
 
   /// <summary>
   /// Responses order in {fieldID},{asc|desc} format. 
@@ -152,7 +158,7 @@ public class TypeformResponsesParameters
   /// Default value is submitted_at,desc.
   /// </summary>
   /// <value></value>
-  public string? Sort { get; set; }
+  public string Sort { get; set; }
 
   /// <summary>
   /// Limit request to only responses that include the specified string. 
@@ -160,7 +166,7 @@ public class TypeformResponsesParameters
   /// fields, hidden fields and variables values.
   /// </summary>
   /// <value></value>
-  public string? Query { get; set; }
+  public string Query { get; set; }
 
   /// <summary>
   /// Show only specified fields in answers section. If response does not 
@@ -168,7 +174,7 @@ public class TypeformResponsesParameters
   /// comma-separated list to specify more than one field value.
   /// </summary>
   /// <value></value>
-  public string? Fields { get; set; }
+  public string Fields { get; set; }
 
   /// <summary>
   /// Limit request to only responses that include the specified fields in 
@@ -176,5 +182,5 @@ public class TypeformResponsesParameters
   /// one field value - response will contain at least one of the specified fields.
   /// </summary>
   /// <value></value>
-  public string? AnsweredFields { get; set; }
+  public string AnsweredFields { get; set; }
 }
