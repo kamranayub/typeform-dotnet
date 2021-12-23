@@ -68,6 +68,8 @@ public class TypeformResponse
     Answers = new AnswerList();
   }
 
+  public DateTime LandedAt { get; set; }
+
   public AnswerList Answers { get; set; }
 }
 
@@ -197,12 +199,14 @@ public class TypeformDateAnswer : TypeformAnswer
   public DateTime Date { get; set; }
 }
 
-public class TypeformPaymentAnswer : TypeformAnswer {
+public class TypeformPaymentAnswer : TypeformAnswer
+{
 
   public TypeformPaymentAnswerData Payment { get; set; }
 }
 
-public class TypeformPaymentAnswerData {
+public class TypeformPaymentAnswerData
+{
   public string Amount { get; set; }
 
   public string Last4 { get; set; }
