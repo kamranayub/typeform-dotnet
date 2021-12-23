@@ -99,6 +99,19 @@ public class AnswerDeserializationTests
     Assert.Equal(expectedUri, answer.Url);
   }
 
+  public void Deserializes_Answer_Payment_Field()
+  {
+    var answer = GetAnswerFromFixture<TypeformPaymentAnswer>(16);
+
+    Assert.Equal(AnswerType.Payment, answer.Type);
+    Assert.Equal(new TypeformPaymentAnswerData()
+    {
+      Amount = "$1.00",
+      Name = "Franz Tester",
+      Last4 = "1234"
+    }, answer.Payment);
+  }
+
   [Fact]
   public void Falls_Back_When_Deserializing_Unknown_Answer_Field()
   {

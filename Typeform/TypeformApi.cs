@@ -176,6 +176,8 @@ public class TypeformChoicesLabels
     Labels = new List<string>();
   }
   public IList<string> Labels { get; set; }
+
+  public string Other { get; set; }
 }
 
 public class TypeformChoiceAnswer : TypeformAnswer
@@ -186,6 +188,8 @@ public class TypeformChoiceAnswer : TypeformAnswer
 public class TypeformChoiceLabel
 {
   public string Label { get; set; }
+
+  public string Other { get; set; }
 }
 
 public class TypeformDateAnswer : TypeformAnswer
@@ -193,13 +197,46 @@ public class TypeformDateAnswer : TypeformAnswer
   public DateTime Date { get; set; }
 }
 
+public class TypeformPaymentAnswer : TypeformAnswer {
+
+  public TypeformPaymentAnswerData Payment { get; set; }
+}
+
+public class TypeformPaymentAnswerData {
+  public string Amount { get; set; }
+
+  public string Last4 { get; set; }
+
+  public string Name { get; set; }
+}
+
 public class TypeformAnswerField
 {
+  /// <summary>
+  /// The unique id of the form field the answer refers to.
+  /// </summary>
+  /// <value></value>
   public string Id { get; set; }
 
+  /// <summary>
+  /// The reference for the question the answer relates to. Use the `ref` value to 
+  /// match answers with questions. The Responses payload only includes `ref` 
+  /// for the fields where you specified them when you created the form.
+  /// </summary>
+  /// <value></value>
   public string Ref { get; set; }
 
+  /// <summary>
+  /// The field's type in the original form.
+  /// </summary>
+  /// <value></value>
   public string Type { get; set; }
+
+  /// <summary>
+  /// The form field's title which the answer is related to.
+  /// </summary>
+  /// <value></value>
+  public string Title { get; set; }
 }
 
 public class TypeformResponsesParameters

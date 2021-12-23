@@ -148,11 +148,24 @@
         {
           "url": "https://www.google.com",
           "field": {
-            "id": "KoJxDM3c6x8h",
+            "id": "kjaengkjasgfakjghakjgfajshgjashfgk",
             "ref": "test_url_reference",
             "type": "website"
           },
           "type": "url"
+        },
+        {
+          "payment": {
+            "amount": "$1.00",
+            "last4": "1234",
+            "name": "Franz Tester"
+          },
+          "field": {
+            "id": "o393jfksd93jfhdhf",
+            "ref": "test_payment_reference",
+            "type": "payment"
+          },
+          "type": "payment"
         }
       ],
       "calculated": {

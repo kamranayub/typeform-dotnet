@@ -75,6 +75,9 @@ namespace Typeform
           case AnswerType.Date:
             answerInstanceType = typeof(TypeformDateAnswer);
             break;
+          case AnswerType.Payment:
+            answerInstanceType = typeof(TypeformPaymentAnswer);
+            break;
           default:
             return defaultAnswer;
         }
