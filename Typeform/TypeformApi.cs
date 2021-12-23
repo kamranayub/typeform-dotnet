@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Refit;
 
@@ -62,17 +64,73 @@ public class TypeformResponse
 {
   public TypeformResponse()
   {
-    Answers = new List<TypeformAnswer>();
+    Answers = new AnswerList();
   }
 
-  public IList<TypeformAnswer> Answers { get; set; }
+  public AnswerList Answers { get; set; }
 }
 
-public struct TypeformAnswer
+public class AnswerList : List<TypeformAnswer> {
+  public T Get<T>(int index) where T : TypeformAnswer {
+    return (T)this[index];
+  }
+}
+
+public enum AnswerType {
+  Text,
+  Choice,
+  Choices,
+  Email,
+  Url,
+  [EnumMember(Value = "file_url")]
+  FileUrl,
+  Boolean,
+  Number,
+  Date,
+  Payment
+}
+
+public enum QuestionType {
+  Matrix,
+  Ranking,
+  Date,
+  Dropdown,
+  Email,
+  [EnumMember(Value = "file_upload")]
+  FileUpload,
+  Group,
+  Legal,
+  [EnumMember(Value = "long_text")]
+  LongText,
+  [EnumMember(Value = "multiple_choice")]
+  MultipleChoice,
+  Number,
+  [EnumMember(Value = "opinion_scale")]
+  OpinionScale,
+  Payment,
+  [EnumMember(Value = "picture_choice")]
+  PictureChoice,
+  Rating,
+  [EnumMember(Value = "short_text")]
+  ShortText,
+  Statement,
+  Website,
+  [EnumMember(Value = "yes_no")]
+  YesNo,
+  [EnumMember(Value = "phone_number")]
+  PhoneNumber
+}
+
+public class TypeformAnswer
 {
   public TypeformAnswerField Field { get; set; }
 
-  public string Type { get; set; }
+  [JsonConverter(typeof(JsonStringEnumMemberConverter ))]
+  public AnswerType Type { get; set; }
+}
+
+public class TypeformTextAnswer : TypeformAnswer {
+  public string Text { get; set; }
 }
 
 public class TypeformAnswerField
