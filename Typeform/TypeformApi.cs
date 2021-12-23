@@ -149,6 +149,16 @@ public class TypeformEmailAnswer : TypeformAnswer
   public string Email { get; set; }
 }
 
+public class TypeformFileUrlAnswer : TypeformAnswer
+{
+
+  /// <summary>
+  /// TODO: Use Uri?
+  /// </summary>
+  /// <value></value>
+  public Uri FileUrl { get; set; }
+}
+
 public class TypeformNumberAnswer : TypeformAnswer
 {
   public int Number { get; set; }

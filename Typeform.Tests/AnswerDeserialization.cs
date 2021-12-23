@@ -6,12 +6,12 @@ namespace Typeform.Tests;
 
 public class AnswerDeserializationTests
 {
-  private T GetAnswerFromFixture<T>(int index) where T : TypeformAnswer
+  private T GetAnswerFromFixture<T>(int answerIndex, int itemIndex = 0) where T : TypeformAnswer
   {
     var responsesFixture = GetResponsesFixture();
     var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
 
-    return responses!.Items[0].Answers.GetAnswer<T>(index);
+    return responses!.Items[itemIndex].Answers.GetAnswer<T>(answerIndex);
   }
 
   [Fact]
@@ -79,6 +79,15 @@ public class AnswerDeserializationTests
     Assert.Equal(AnswerType.Choice, answer.Type);
     Assert.NotNull(answer.Choice);
     Assert.Equal("A friend's experience in Sydney", answer.Choice.Label);
+  }
+
+  public void Deserializes_Answer_FileUrl_Field()
+  {
+    var answer = GetAnswerFromFixture<TypeformFileUrlAnswer>(1, itemIndex: 1);
+    var expectedUri = new Uri("https://api.typeform.com/forms/lT9Z2j/responses/7f46165474d11ee5836777d85df2cdab/fields/X4BgU2f1K6tG/files/afd8258fd453-aerial_view_rural_city_latvia_valmiera_urban_district_48132860.jpg");
+
+    Assert.Equal(AnswerType.FileUrl, answer.Type);
+    Assert.Equal(expectedUri, answer.FileUrl);
   }
 
   [Fact]
