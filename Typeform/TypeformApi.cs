@@ -126,12 +126,15 @@ public class TypeformAnswer
 {
   public TypeformAnswerField Field { get; set; }
 
-  [JsonConverter(typeof(JsonStringEnumMemberConverter ))]
   public AnswerType Type { get; set; }
 }
 
 public class TypeformTextAnswer : TypeformAnswer {
   public string Text { get; set; }
+}
+
+public class TypeformBooleanAnswer : TypeformAnswer {
+  public bool Boolean { get; set; }
 }
 
 public class TypeformAnswerField

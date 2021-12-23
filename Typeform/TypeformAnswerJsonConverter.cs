@@ -51,6 +51,9 @@ namespace Typeform
           case AnswerType.Text:
             answerInstanceType = typeof(TypeformTextAnswer);
             break;
+          case AnswerType.Boolean:
+            answerInstanceType = typeof(TypeformBooleanAnswer);
+            break;
           default:
             return defaultAnswer;
         }

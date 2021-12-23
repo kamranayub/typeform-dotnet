@@ -21,13 +21,13 @@
           "type": "boolean"
         },
         {
-          "boolean": true,
+          "abcdefg": 1337,
           "field": {
             "id": "gFFf3xAkJKsr",
             "ref": "my_custom_legal_reference",
             "type": "legal"
           },
-          "type": "boolean"
+          "type": "abcdefg"
         },
         {
           "field": {

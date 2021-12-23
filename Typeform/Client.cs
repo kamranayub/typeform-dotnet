@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Refit;
 
 namespace Typeform
@@ -9,7 +10,13 @@ namespace Typeform
     public static JsonSerializerOptions DefaultSystemTextJsonSerializerOptions => new JsonSerializerOptions()
     {
       PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
-      Converters = { new TypeformAnswerJsonConverter() }
+      Converters = {
+        new TypeformAnswerJsonConverter(),
+        new JsonStringEnumMemberConverter(
+          new JsonStringEnumMemberConverterOptions() {
+            DeserializationFailureFallbackValue = AnswerType.Unknown
+          }, typeof(AnswerType))
+        }
     };
 
     /// <summary>

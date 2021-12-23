@@ -19,12 +19,24 @@ public class AnswerDeserializationTests
   }
 
   [Fact]
+  public void Deserializes_Answer_Boolean_Field()
+  {
+    var responsesFixture = GetResponsesFixture();
+    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+
+    Assert.Equal(AnswerType.Boolean, responses!.Items[0].Answers[1].Type);
+    var booleanAnswer = responses.Items[0].Answers.GetAnswer<TypeformBooleanAnswer>(1);
+    Assert.NotNull(booleanAnswer);
+    Assert.False(booleanAnswer.Boolean);
+  }
+
+  [Fact]
   public void Falls_Back_When_Deserializing_Unknown_Answer_Field()
   {
     var responsesFixture = GetResponsesFixture();
     var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
 
-    Assert.Equal(AnswerType.Unknown, responses!.Items[0].Answers[0].Type);
+    Assert.Equal(AnswerType.Unknown, responses!.Items[0].Answers[2].Type);
   }
 
   private string GetResponsesFixture()
