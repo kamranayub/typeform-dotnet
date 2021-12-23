@@ -60,6 +60,9 @@ namespace Typeform
           case AnswerType.Number:
             answerInstanceType = typeof(TypeformNumberAnswer);
             break;
+          case AnswerType.Choices:
+            answerInstanceType = typeof(TypeformChoicesAnswer);
+            break;
           default:
             return defaultAnswer;
         }

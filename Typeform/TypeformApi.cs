@@ -145,6 +145,17 @@ public class TypeformNumberAnswer : TypeformAnswer {
   public int Number { get; set; }
 }
 
+public class TypeformChoicesAnswer : TypeformAnswer {
+  public TypeformChoicesLabels Choices {get;set;}
+}
+
+public class TypeformChoicesLabels {
+  public TypeformChoicesLabels() {
+    Labels = new List<string>();
+  }
+  public IList<string> Labels { get; set; }
+}
+
 public class TypeformAnswerField
 {
   public string Id { get; set; }

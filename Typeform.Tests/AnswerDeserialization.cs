@@ -50,6 +50,18 @@ public class AnswerDeserializationTests
   }
 
   [Fact]
+  public void Deserializes_Answer_Choices_Field()
+  {
+    var answer = GetAnswerFromFixture<TypeformChoicesAnswer>(10);
+    
+    Assert.Equal(AnswerType.Choices, answer.Type);
+    Assert.NotNull(answer.Choices);
+    Assert.NotEmpty(answer.Choices.Labels);
+    Assert.Contains("New York", answer.Choices.Labels);
+    Assert.Contains("Tokyo", answer.Choices.Labels);
+  }
+
+  [Fact]
   public void Falls_Back_When_Deserializing_Unknown_Answer_Field()
   {
     var answer = GetAnswerFromFixture<TypeformAnswer>(2);
