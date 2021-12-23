@@ -31,6 +31,18 @@ public class AnswerDeserializationTests
   }
 
   [Fact]
+  public void Deserializes_Answer_Number_Field()
+  {
+    var responsesFixture = GetResponsesFixture();
+    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+
+    Assert.Equal(AnswerType.Number, responses!.Items[0].Answers[5].Type);
+    var numberAnswer = responses.Items[0].Answers.GetAnswer<TypeformNumberAnswer>(5);
+    Assert.NotNull(numberAnswer);
+    Assert.Equal(1, numberAnswer.Number);
+  }
+
+  [Fact]
   public void Deserializes_Answer_Boolean_Field()
   {
     var responsesFixture = GetResponsesFixture();

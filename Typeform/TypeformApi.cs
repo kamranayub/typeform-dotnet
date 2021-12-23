@@ -141,6 +141,10 @@ public class TypeformEmailAnswer : TypeformAnswer {
   public string Email { get; set; }
 }
 
+public class TypeformNumberAnswer : TypeformAnswer {
+  public int Number { get; set; }
+}
+
 public class TypeformAnswerField
 {
   public string Id { get; set; }
