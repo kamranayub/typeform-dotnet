@@ -137,6 +137,10 @@ public class TypeformBooleanAnswer : TypeformAnswer {
   public bool Boolean { get; set; }
 }
 
+public class TypeformEmailAnswer : TypeformAnswer {
+  public string Email { get; set; }
+}
+
 public class TypeformAnswerField
 {
   public string Id { get; set; }

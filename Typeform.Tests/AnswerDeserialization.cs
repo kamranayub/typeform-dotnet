@@ -19,6 +19,18 @@ public class AnswerDeserializationTests
   }
 
   [Fact]
+  public void Deserializes_Answer_Email_Field()
+  {
+    var responsesFixture = GetResponsesFixture();
+    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+
+    Assert.Equal(AnswerType.Email, responses!.Items[0].Answers[4].Type);
+    var emailAnswer = responses.Items[0].Answers.GetAnswer<TypeformEmailAnswer>(4);
+    Assert.NotNull(emailAnswer);
+    Assert.Equal("lian1078@other.com", emailAnswer.Email);
+  }
+
+  [Fact]
   public void Deserializes_Answer_Boolean_Field()
   {
     var responsesFixture = GetResponsesFixture();
