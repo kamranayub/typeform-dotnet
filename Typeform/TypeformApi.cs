@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -70,13 +71,16 @@ public class TypeformResponse
   public AnswerList Answers { get; set; }
 }
 
-public class AnswerList : List<TypeformAnswer> {
-  public T GetAnswer<T>(int index) where T : TypeformAnswer {
+public class AnswerList : List<TypeformAnswer>
+{
+  public T GetAnswer<T>(int index) where T : TypeformAnswer
+  {
     return (T)this[index];
   }
 }
 
-public enum AnswerType {
+public enum AnswerType
+{
   Unknown,
   Text,
   Choice,
@@ -91,7 +95,8 @@ public enum AnswerType {
   Payment
 }
 
-public enum QuestionType {
+public enum QuestionType
+{
   Matrix,
   Ranking,
   Date,
@@ -129,28 +134,40 @@ public class TypeformAnswer
   public AnswerType Type { get; set; }
 }
 
-public class TypeformTextAnswer : TypeformAnswer {
+public class TypeformTextAnswer : TypeformAnswer
+{
   public string Text { get; set; }
 }
 
-public class TypeformBooleanAnswer : TypeformAnswer {
+public class TypeformBooleanAnswer : TypeformAnswer
+{
   public bool Boolean { get; set; }
 }
 
-public class TypeformEmailAnswer : TypeformAnswer {
+public class TypeformEmailAnswer : TypeformAnswer
+{
   public string Email { get; set; }
 }
 
-public class TypeformNumberAnswer : TypeformAnswer {
+public class TypeformNumberAnswer : TypeformAnswer
+{
   public int Number { get; set; }
 }
 
-public class TypeformChoicesAnswer : TypeformAnswer {
-  public TypeformChoicesLabels Choices {get;set;}
+public class TypeformChoicesAnswer : TypeformAnswer
+{
+  public TypeformChoicesLabels Choices { get; set; }
 }
 
-public class TypeformChoicesLabels {
-  public TypeformChoicesLabels() {
+public class TypeformDateAnswer : TypeformAnswer
+{
+  public DateTime Date { get; set; }
+}
+
+public class TypeformChoicesLabels
+{
+  public TypeformChoicesLabels()
+  {
     Labels = new List<string>();
   }
   public IList<string> Labels { get; set; }
