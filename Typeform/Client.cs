@@ -1,20 +1,31 @@
-﻿using Refit;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Refit;
 
 namespace Typeform
 {
 
   public class TypeformClient
   {
+    public static JsonSerializerOptions DefaultSystemTextJsonSerializerOptions => new JsonSerializerOptions()
+    {
+      PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
+      Converters = {
+        new TypeformAnswerJsonConverter(),
+        new JsonStringEnumMemberConverter(
+          new JsonStringEnumMemberConverterOptions() {
+            DeserializationFailureFallbackValue = AnswerType.Unknown
+          }, typeof(AnswerType))
+        }
+    };
+
     /// <summary>
     /// Note: Doesn't make sense for consumers to override naming policy!
     /// </summary>
     /// <value></value>
     public static RefitSettings DefaultSettings => new RefitSettings
     {
-      ContentSerializer = new SystemTextJsonContentSerializer(new System.Text.Json.JsonSerializerOptions()
-      {
-        PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy()
-      })
+      ContentSerializer = new SystemTextJsonContentSerializer(DefaultSystemTextJsonSerializerOptions)
     };
 
     public static ITypeformApi CreateApi()

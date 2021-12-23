@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Refit;
 
@@ -55,33 +58,185 @@ public class TypeformResponsesContainer
   /// Array of Typeform Response objects
   /// </summary>
   /// <value></value>
-  public ICollection<TypeformResponse> Items { get; set; }
+  public IList<TypeformResponse> Items { get; set; }
 }
 
 public class TypeformResponse
 {
   public TypeformResponse()
   {
-    Answers = new List<TypeformAnswer>();
+    Answers = new AnswerList();
   }
 
-  public ICollection<TypeformAnswer> Answers { get; set; }
+  public AnswerList Answers { get; set; }
+}
+
+public class AnswerList : List<TypeformAnswer>
+{
+  public T GetAnswer<T>(int index) where T : TypeformAnswer
+  {
+    return (T)this[index];
+  }
+}
+
+public enum AnswerType
+{
+  Unknown,
+  Text,
+  Choice,
+  Choices,
+  Email,
+  Url,
+  [EnumMember(Value = "file_url")]
+  FileUrl,
+  Boolean,
+  Number,
+  Date,
+  Payment
+}
+
+public enum QuestionType
+{
+  Matrix,
+  Ranking,
+  Date,
+  Dropdown,
+  Email,
+  [EnumMember(Value = "file_upload")]
+  FileUpload,
+  Group,
+  Legal,
+  [EnumMember(Value = "long_text")]
+  LongText,
+  [EnumMember(Value = "multiple_choice")]
+  MultipleChoice,
+  Number,
+  [EnumMember(Value = "opinion_scale")]
+  OpinionScale,
+  Payment,
+  [EnumMember(Value = "picture_choice")]
+  PictureChoice,
+  Rating,
+  [EnumMember(Value = "short_text")]
+  ShortText,
+  Statement,
+  Website,
+  [EnumMember(Value = "yes_no")]
+  YesNo,
+  [EnumMember(Value = "phone_number")]
+  PhoneNumber
 }
 
 public class TypeformAnswer
 {
   public TypeformAnswerField Field { get; set; }
 
-  public string Type { get; set; }
+  public AnswerType Type { get; set; }
+}
+
+public class TypeformTextAnswer : TypeformAnswer
+{
+  public string Text { get; set; }
+}
+
+public class TypeformBooleanAnswer : TypeformAnswer
+{
+  public bool Boolean { get; set; }
+}
+
+public class TypeformEmailAnswer : TypeformAnswer
+{
+  public string Email { get; set; }
+}
+
+public class TypeformFileUrlAnswer : TypeformAnswer
+{
+  public Uri FileUrl { get; set; }
+}
+
+public class TypeformUrlAnswer : TypeformAnswer
+{
+  public Uri Url { get; set; }
+}
+
+public class TypeformNumberAnswer : TypeformAnswer
+{
+  public int Number { get; set; }
+}
+
+public class TypeformChoicesAnswer : TypeformAnswer
+{
+  public TypeformChoicesLabels Choices { get; set; }
+}
+
+public class TypeformChoicesLabels
+{
+  public TypeformChoicesLabels()
+  {
+    Labels = new List<string>();
+  }
+  public IList<string> Labels { get; set; }
+
+  public string Other { get; set; }
+}
+
+public class TypeformChoiceAnswer : TypeformAnswer
+{
+  public TypeformChoiceLabel Choice { get; set; }
+}
+
+public class TypeformChoiceLabel
+{
+  public string Label { get; set; }
+
+  public string Other { get; set; }
+}
+
+public class TypeformDateAnswer : TypeformAnswer
+{
+  public DateTime Date { get; set; }
+}
+
+public class TypeformPaymentAnswer : TypeformAnswer {
+
+  public TypeformPaymentAnswerData Payment { get; set; }
+}
+
+public class TypeformPaymentAnswerData {
+  public string Amount { get; set; }
+
+  public string Last4 { get; set; }
+
+  public string Name { get; set; }
 }
 
 public class TypeformAnswerField
 {
+  /// <summary>
+  /// The unique id of the form field the answer refers to.
+  /// </summary>
+  /// <value></value>
   public string Id { get; set; }
 
+  /// <summary>
+  /// The reference for the question the answer relates to. Use the `ref` value to 
+  /// match answers with questions. The Responses payload only includes `ref` 
+  /// for the fields where you specified them when you created the form.
+  /// </summary>
+  /// <value></value>
   public string Ref { get; set; }
 
+  /// <summary>
+  /// The field's type in the original form.
+  /// </summary>
+  /// <value></value>
   public string Type { get; set; }
+
+  /// <summary>
+  /// The form field's title which the answer is related to.
+  /// </summary>
+  /// <value></value>
+  public string Title { get; set; }
 }
 
 public class TypeformResponsesParameters
