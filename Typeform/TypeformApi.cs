@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Typeform;
 
 public interface ITypeformApi
@@ -62,7 +64,7 @@ public class TypeformResponse
   public ICollection<TypeformAnswer> Answers { get; set; }
 }
 
-public class TypeformAnswer
+public struct TypeformAnswer
 {
   public TypeformAnswerField Field { get; set; }
 
