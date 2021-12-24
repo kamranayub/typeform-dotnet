@@ -1,5 +1,11 @@
-namespace Typeform;
+namespace System.Text.Json;
 
+/// <summary>
+/// https://github.com/J0rgeSerran0/JsonNamingPolicy/blob/3400da9e73317d463178012ca5f955b412bad5b4/JsonSnakeCaseNamingPolicy.cs
+/// </summary>
+/// <remarks>
+/// Updated to support netstandard2.0, modifying the spanName initialization.
+/// </remarks>
 public class JsonSnakeCaseNamingPolicy : JsonNamingPolicy
 {
   private readonly string _separator = "_";

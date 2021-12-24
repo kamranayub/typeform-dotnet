@@ -1,7 +1,7 @@
 
 using System.Text.Json.Serialization;
 
-namespace Typeform;
+namespace Typeform.Serialization;
 
 public class TypeformVariableJsonConverter : JsonConverter<TypeformVariable>
 {

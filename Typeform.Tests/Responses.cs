@@ -8,7 +8,7 @@ public class ResponsesTests
   private TypeformResponse GetResponseFromFixture(int responseIndex)
   {
     var responsesFixture = FixturesHelper.GetResponsesFixture();
-    var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
+    var responses = JsonSerializer.Deserialize<TypeformResponseItems>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
 
     return responses!.Items[responseIndex];
   }
