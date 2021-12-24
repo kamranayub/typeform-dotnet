@@ -1,39 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Refit;
 
-namespace Typeform
+namespace Typeform;
+
+public interface ITypeformApi
 {
+  /// <summary>
+  /// Typeform Responses API
+  /// </summary>
+  /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
+  /// <returns></returns>
+  [Get("/forms/{form_id}/responses")]
+  Task<TypeformResponsesContainer> GetFormResponsesAsync(
+    [Authorize("Bearer")] string accessToken,
+    [AliasAs("form_id")] string formId);
 
-  public interface ITypeformApi
-  {
-    /// <summary>
-    /// Typeform Responses API
-    /// </summary>
-    /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
-    /// <returns></returns>
-    [Get("/forms/{form_id}/responses")]
-    Task<TypeformResponsesContainer> GetFormResponsesAsync(
-      [Authorize("Bearer")] string accessToken,
-      [AliasAs("form_id")] string formId);
-
-    /// <summary>
-    /// Typeform Responses API
-    /// </summary>
-    /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
-    /// <param name="queryParams">Optional query parameters to pass to Responses endpoint</param>
-    /// <returns></returns>
-    [Get("/forms/{form_id}/responses")]
-    Task<TypeformResponsesContainer> GetFormResponsesAsync(
-      [Authorize("Bearer")] string accessToken,
-      [AliasAs("form_id")] string formId,
-      TypeformResponsesParameters queryParams);
-  }
+  /// <summary>
+  /// Typeform Responses API
+  /// </summary>
+  /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
+  /// <param name="queryParams">Optional query parameters to pass to Responses endpoint</param>
+  /// <returns></returns>
+  [Get("/forms/{form_id}/responses")]
+  Task<TypeformResponsesContainer> GetFormResponsesAsync(
+    [Authorize("Bearer")] string accessToken,
+    [AliasAs("form_id")] string formId,
+    TypeformResponsesParameters queryParams);
 }
 
 public class TypeformResponsesContainer

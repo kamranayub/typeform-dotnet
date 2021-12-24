@@ -1,10 +1,6 @@
-using System;
-using System.Linq;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Typeform
-{
+namespace Typeform;
 
   public class TypeformAnswerJsonConverter : JsonConverter<TypeformAnswer>
   {
@@ -95,4 +91,3 @@ namespace Typeform
       JsonSerializer.Serialize(writer, (object)answer, options);
     }
   }
-}
