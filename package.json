@@ -32,7 +32,7 @@
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
-      "./lib/prepare-nuget-release.js",
+      "./plugins/prepare-nuget-release.js",
       ["semantic-release-nuget", {
         "pushUrl": "https://api.nuget.org/v3/index.json",
         "packArguments": ["/p:Version=${NUGET_VERSION}"]

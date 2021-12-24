@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <!-- The identifier that must be unique within the hosting gallery -->
         <id>Typeform</id>
@@ -49,7 +49,4 @@
           <dependency id="Refit" version="6.1.15" />
         </dependencies>
     </metadata>
-    <files>
-        <file src="Typeform/bin/Release/**.dll" target="lib" />
-    </files>
 </package>
