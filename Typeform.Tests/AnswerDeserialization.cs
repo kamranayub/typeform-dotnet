@@ -72,6 +72,7 @@ public class AnswerDeserializationTests
     Assert.Equal(expectedDate, answer.Date);
   }
 
+  [Fact]
   public void Deserializes_Answer_Choice_Field()
   {
     var answer = GetAnswerFromFixture<TypeformChoiceAnswer>(12);
@@ -81,6 +82,7 @@ public class AnswerDeserializationTests
     Assert.Equal("A friend's experience in Sydney", answer.Choice.Label);
   }
 
+  [Fact]
   public void Deserializes_Answer_FileUrl_Field()
   {
     var answer = GetAnswerFromFixture<TypeformFileUrlAnswer>(1, itemIndex: 1);
@@ -90,6 +92,7 @@ public class AnswerDeserializationTests
     Assert.Equal(expectedUri, answer.FileUrl);
   }
 
+  [Fact]
   public void Deserializes_Answer_Url_Field()
   {
     var answer = GetAnswerFromFixture<TypeformUrlAnswer>(15);
@@ -99,17 +102,21 @@ public class AnswerDeserializationTests
     Assert.Equal(expectedUri, answer.Url);
   }
 
+  [Fact]
   public void Deserializes_Answer_Payment_Field()
   {
     var answer = GetAnswerFromFixture<TypeformPaymentAnswer>(16);
-
-    Assert.Equal(AnswerType.Payment, answer.Type);
-    Assert.Equal(new TypeformPaymentAnswerData()
+    var expectedPaymentData = new TypeformPaymentAnswerData()
     {
       Amount = "$1.00",
       Name = "Franz Tester",
       Last4 = "1234"
-    }, answer.Payment);
+    };
+
+    Assert.Equal(AnswerType.Payment, answer.Type);
+    Assert.Equal(expectedPaymentData.Amount, answer.Payment.Amount);
+    Assert.Equal(expectedPaymentData.Name, answer.Payment.Name);
+    Assert.Equal(expectedPaymentData.Last4, answer.Payment.Last4);
   }
 
   [Fact]

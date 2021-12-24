@@ -53,7 +53,7 @@ public class ResponsesTests
   public void Deserializes_Response_Hidden()
   {
     var response = GetResponseFromFixture(0);
-    Assert.Equal(true, response.Hidden.Value<bool>("bool"));
+    Assert.True(response.Hidden.Value<bool>("bool"));
     Assert.Equal("abc", response.Hidden.Value<string>("string"));
     Assert.Equal(1, response.Hidden.Value<int>("number"));
   }

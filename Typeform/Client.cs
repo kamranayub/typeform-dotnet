@@ -1,9 +1,6 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using Refit;
 
-namespace Typeform
-{
+namespace Typeform;
 
   public class TypeformClient
   {
@@ -60,4 +57,3 @@ namespace Typeform
       return typeformApi;
     }
   }
-}
