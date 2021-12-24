@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <!-- The identifier that must be unique within the hosting gallery -->
+        <id>Typeform</id>
+
+        <!-- The package version number that is used when resolving dependencies -->
+        <version>$version$</version>
+
+        <!-- Authors contain text that appears directly on the gallery -->
+        <authors>Kamran Ayub</authors>
+
+        <!-- 
+            Owners are typically nuget.org identities that allow gallery
+            users to easily find other packages by the same owners.  
+        -->
+        <owners>kayub</owners>
+        
+         <!-- Project URL provides a link for the gallery -->
+        <projectUrl>http://github.com/kamranayub/typeform-dotnet</projectUrl>
+
+         <!-- License information is displayed on the gallery -->
+        <license type="expression">Apache-2.0</license>
+        
+
+        <!-- The icon is used in Visual Studio's package manager UI -->
+        <iconUrl>https://www.typeform.com/apple-touch-icon.png</iconUrl>
+
+        <!-- 
+            If true, this value prompts the user to accept the license when
+            installing the package. 
+        -->
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+        <!-- 
+            The description can be used in package manager UI. Note that the
+            nuget.org gallery uses information you add in the portal. 
+        -->
+        <description>Typeform API .NET Standard 2.0 wrapper built with Refit</description>
+
+        <!-- Copyright information -->
+        <copyright>Copyright 2021 Kamran Ayub</copyright>
+
+        <!-- Tags appear in the gallery and can be used for tag searches -->
+        <tags>typeform dotnet forms surveys videoask opinions feedback</tags>
+        
+        <dependencies>
+          <dependency id="Macross.Json.Extensions" version="2.2.0-beta2" />
+          <dependency id="Refit" version="6.1.15" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Typeform/bin/Release/**.dll" target="lib" />
+    </files>
+</package>
