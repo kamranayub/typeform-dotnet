@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Typeform;
+namespace Typeform.Json.Serialization;
 
 public class TypeformAnswerJsonConverter : JsonConverter<TypeformAnswer>
 {
@@ -34,19 +34,19 @@ public class TypeformAnswerJsonConverter : JsonConverter<TypeformAnswer>
       var typePropertyJson = $"{{ \"type\": \"{typeProperty.GetString()}\" }}";
       var defaultAnswer = JsonSerializer.Deserialize<TypeformAnswer>(typePropertyJson, modifiedOptions);
 
-      AnswerType type = defaultAnswer.Type;
+      TypeformAnswerType type = defaultAnswer.Type;
       Type answerInstanceType = type switch
       {
-        AnswerType.Boolean => typeof(TypeformBooleanAnswer),
-        AnswerType.Choice => typeof(TypeformChoiceAnswer),
-        AnswerType.Choices => typeof(TypeformChoicesAnswer),
-        AnswerType.Date => typeof(TypeformDateAnswer),
-        AnswerType.Email => typeof(TypeformEmailAnswer),
-        AnswerType.FileUrl => typeof(TypeformFileUrlAnswer),
-        AnswerType.Number => typeof(TypeformNumberAnswer),
-        AnswerType.Payment => typeof(TypeformPaymentAnswer),
-        AnswerType.Text => typeof(TypeformTextAnswer),
-        AnswerType.Url => typeof(TypeformUrlAnswer),
+        TypeformAnswerType.Boolean => typeof(TypeformAnswerBoolean),
+        TypeformAnswerType.Choice => typeof(TypeformAnswerChoice),
+        TypeformAnswerType.Choices => typeof(TypeformAnswerChoices),
+        TypeformAnswerType.Date => typeof(TypeformAnswerDate),
+        TypeformAnswerType.Email => typeof(TypeformAnswerEmail),
+        TypeformAnswerType.FileUrl => typeof(TypeformAnswerFileUrl),
+        TypeformAnswerType.Number => typeof(TypeformAnswerNumber),
+        TypeformAnswerType.Payment => typeof(TypeformAnswerPayment),
+        TypeformAnswerType.Text => typeof(TypeformAnswerText),
+        TypeformAnswerType.Url => typeof(TypeformAnswerUrl),
         _ => typeof(TypeformAnswer)
       };
 
