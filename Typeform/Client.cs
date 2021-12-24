@@ -1,4 +1,4 @@
-using Typeform.Serialization;
+using Typeform.Json.Serialization;
 using System.Text.Json.Serialization;
 
 namespace Typeform;

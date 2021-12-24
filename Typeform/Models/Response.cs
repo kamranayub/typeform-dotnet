@@ -1,3 +1,5 @@
+using Typeform.Json;
+
 namespace Typeform.Models;
 
 public class TypeformResponse
@@ -6,7 +8,7 @@ public class TypeformResponse
   {
     Answers = new TypeformResponseAnswers();
     Variables = new TypeformResponseVariables();
-    Hidden = new TypeformJsonValueDictionary();
+    Hidden = new JsonValueDictionary();
     Metadata = new TypeformResponseMetadata();
     Calculated = new TypeformResponseCalculatedFields();
   }
@@ -35,7 +37,7 @@ public class TypeformResponse
 
   public TypeformResponseCalculatedFields Calculated { get; set; }
 
-  public TypeformJsonValueDictionary Hidden { get; set; }
+  public JsonValueDictionary Hidden { get; set; }
 
   public TypeformResponseAnswers Answers { get; set; }
 

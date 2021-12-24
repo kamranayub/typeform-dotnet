@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Typeform.Serialization;
+namespace Typeform.Json.Serialization;
 
 public class TypeformAnswerJsonConverter : JsonConverter<TypeformAnswer>
 {
