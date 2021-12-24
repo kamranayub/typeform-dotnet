@@ -27,10 +27,20 @@ public interface ITypeformApi
   Task<TypeformResponseItems> GetFormResponsesAsync(
     [Authorize("Bearer")] string accessToken,
     [AliasAs("form_id")] string formId,
-    TypeformResponsesParameters queryParams);
+    TypeformGetResponsesParameters queryParams);
+
+  /// <summary>
+  /// Delete responses to a form.
+  /// </summary>
+  /// <param name="includedResponseIds">List of response_id values of the responses to delete. You can list up to 1000 tokens.</param>
+  [Delete("/forms/{form_id}/responses")]
+  Task<TypeformResponseItems> DeleteFormResponsesAsync(
+    [Authorize("Bearer")] string accessToken,
+    [AliasAs("form_id")] string formId,
+    [AliasAs("included_response_ids")] string[] includedResponseIds);
 }
 
-public class TypeformResponsesParameters
+public class TypeformGetResponsesParameters
 {
   /// <summary>
   /// Maximum number of responses. Default value is 25. Maximum value is 1000. 
@@ -120,7 +130,7 @@ public class TypeformResponsesParameters
   /// comma-separated list to specify more than one field value.
   /// </summary>
   /// <value></value>
-  public string Fields { get; set; }
+  public string[] Fields { get; set; }
 
   /// <summary>
   /// Limit request to only responses that include the specified fields in 
@@ -128,5 +138,5 @@ public class TypeformResponsesParameters
   /// one field value - response will contain at least one of the specified fields.
   /// </summary>
   /// <value></value>
-  public string AnsweredFields { get; set; }
+  public string[] AnsweredFields { get; set; }
 }
