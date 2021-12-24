@@ -1,6 +1,10 @@
 # typeform-dotnet
 
-A .NET SDK wrapper built with [Refit](https://github.com/reactiveui/refit) around Typeform's API.
+A .NET Standard 2.0 SDK wrapper built with [Refit](https://github.com/reactiveui/refit) around Typeform's API.
+
+## Supported Endpoints
+
+- [Retrieve Responses](https://developer.typeform.com/responses/reference/retrieve-responses/) (https://api.typeform.com/forms/{form_id}/responses)
 
 ## Usage
 
@@ -19,16 +23,20 @@ var client = TypeformClient.CreateApi(settings);
 ```c#
 using Typeform;
 
-// Nice-to-have
-services.AddTypeformApi();
+// TODO: Not Implemented Yet
+// services.AddTypeformApi();
 
 // You can always do this
 services.AddRefitClient<ITypeformApi>(TypeformClient.DefaultSettings);
-// TODO?
-services.AddRefitClient<ITypeformApi>(TypeformClient.CreateSettings(settings));
 ```
 
 ### Consuming the API
+
+You will need to pass your Typeform OAuth or Personal Access Token. Currently, this
+is implemented as a string argument to the endpoint methods.
+
+> TODO: Obtaining an OAuth token is not implemented yet. But for server-side flows,
+> usually a Personal Access Token is "good enough."
 
 ```c#
 public class HomeController : Controller {
@@ -53,11 +61,11 @@ public class HomeController : Controller {
 
 - [x] Create a basic API client
 - [x] Support for passing in an access token
-- [ ] Nuget package flow
-- [ ] Github CI for tests / build / publish
-- [ ] Target .NET Standard / maximize compatibility
+- [x] Nuget package flow
+- [x] Github CI for tests / build / publish
+- [x] Target .NET Standard / maximize compatibility
 - [ ] Support for [Responses API](https://developer.typeform.com/responses/)
-  - [ ] [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
+  - [x] [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
   - [ ] [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
   - [ ] [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
   - [ ] [Retrieve Form Insights](https://developer.typeform.com/responses/reference/retrieve-form-insights/)
