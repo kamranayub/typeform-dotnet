@@ -14,6 +14,33 @@ public class ResponsesTests
   }
 
   [Fact]
+  public void Deserializes_Response_Answer_By_Index()
+  {
+    var response = GetResponseFromFixture(0);
+    var answerByIndex = response.Answers.GetAnswer<TypeformAnswerText>(0);
+    Assert.NotNull(answerByIndex);
+    Assert.Equal("Job opportunities", answerByIndex.Text);
+  }
+
+  [Fact]
+  public void Deserializes_Response_Answer_By_Field_Id()
+  {
+    var response = GetResponseFromFixture(0);
+    var answerById = response.Answers.GetAnswerById<TypeformAnswerText>("hVONkQcnSNRj");
+    Assert.NotNull(answerById);
+    Assert.Equal("Job opportunities", answerById.Text);
+  }
+
+  [Fact]
+  public void Deserializes_Response_Answer_By_Field_Ref()
+  {
+    var response = GetResponseFromFixture(0);
+    var answerById = response.Answers.GetAnswerByRef<TypeformAnswerText>("my_custom_dropdown_reference");
+    Assert.NotNull(answerById);
+    Assert.Equal("Job opportunities", answerById.Text);
+  }
+
+  [Fact]
   public void Deserializes_Response_LandedAt()
   {
     var response = GetResponseFromFixture(0);

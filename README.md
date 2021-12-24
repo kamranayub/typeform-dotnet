@@ -66,11 +66,31 @@ The Typeform Responses API returns form responses that include answers. Each ans
 If you know what type an answer is _supposed_ to be, you can use the `Answers.GetAnswer<T>(index)` method
 to retrieve an answer at an index that is the expected type:
 
+**Answer By Index**
+
 ```c#
 var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
 
 // Retrieve first response's answer as Text type (by index)
 var answerText = responses.Items[0].Answers.GetAnswer<TypeformAnswerText>(0);
+```
+
+**Answer By Field ID**
+
+```c#
+var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
+
+// Retrieve first response's answer as Text type (by field.id)
+var answerText = responses.Items[0].Answers.GetAnswerById<TypeformAnswerText>("abc123");
+```
+
+**Answer By Field Ref**
+
+```c#
+var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
+
+// Retrieve first response's answer as Text type (by field.ref)
+var answerText = responses.Items[0].Answers.GetAnswerByRef<TypeformAnswerText>("my_custom_ref");
 ```
 
 If you _do not_ know what type an answer is _supposed_ to be, you can inspect its type:
