@@ -24,8 +24,6 @@ public class TypeformAnswerJsonConverter : JsonConverter<TypeformAnswer>
         throw new JsonException();
       }
 
-      AnswerType type = AnswerType.Unknown;
-      string rawJson = jsonDocument.RootElement.GetRawText();
       var modifiedOptions = new JsonSerializerOptions(options);
       var existingConverter = modifiedOptions.Converters.FirstOrDefault(c => c is TypeformAnswerJsonConverter);
       if (existingConverter != null)
@@ -33,51 +31,26 @@ public class TypeformAnswerJsonConverter : JsonConverter<TypeformAnswer>
         modifiedOptions.Converters.Remove(existingConverter);
       }
 
-      // TODO: This could be optimized maybe to avoid deserializing entire object?
-      // { type: "text" }
       var typePropertyJson = $"{{ \"type\": \"{typeProperty.GetString()}\" }}";
       var defaultAnswer = JsonSerializer.Deserialize<TypeformAnswer>(typePropertyJson, modifiedOptions);
 
-      type = defaultAnswer.Type;
-
-      Type answerInstanceType;
-
-      switch (type)
+      AnswerType type = defaultAnswer.Type;
+      Type answerInstanceType = type switch
       {
-        case AnswerType.Text:
-          answerInstanceType = typeof(TypeformTextAnswer);
-          break;
-        case AnswerType.Boolean:
-          answerInstanceType = typeof(TypeformBooleanAnswer);
-          break;
-        case AnswerType.Email:
-          answerInstanceType = typeof(TypeformEmailAnswer);
-          break;
-        case AnswerType.Url:
-          answerInstanceType = typeof(TypeformUrlAnswer);
-          break;
-        case AnswerType.FileUrl:
-          answerInstanceType = typeof(TypeformFileUrlAnswer);
-          break;
-        case AnswerType.Number:
-          answerInstanceType = typeof(TypeformNumberAnswer);
-          break;
-        case AnswerType.Choice:
-          answerInstanceType = typeof(TypeformChoiceAnswer);
-          break;
-        case AnswerType.Choices:
-          answerInstanceType = typeof(TypeformChoicesAnswer);
-          break;
-        case AnswerType.Date:
-          answerInstanceType = typeof(TypeformDateAnswer);
-          break;
-        case AnswerType.Payment:
-          answerInstanceType = typeof(TypeformPaymentAnswer);
-          break;
-        default:
-          return defaultAnswer;
-      }
+        AnswerType.Boolean => typeof(TypeformBooleanAnswer),
+        AnswerType.Choice => typeof(TypeformChoiceAnswer),
+        AnswerType.Choices => typeof(TypeformChoicesAnswer),
+        AnswerType.Date => typeof(TypeformDateAnswer),
+        AnswerType.Email => typeof(TypeformEmailAnswer),
+        AnswerType.FileUrl => typeof(TypeformFileUrlAnswer),
+        AnswerType.Number => typeof(TypeformNumberAnswer),
+        AnswerType.Payment => typeof(TypeformPaymentAnswer),
+        AnswerType.Text => typeof(TypeformTextAnswer),
+        AnswerType.Url => typeof(TypeformUrlAnswer),
+        _ => typeof(TypeformAnswer)
+      };
 
+      var rawJson = jsonDocument.RootElement.GetRawText();
       var result = (TypeformAnswer)JsonSerializer.Deserialize(
         rawJson, answerInstanceType, modifiedOptions);
 

@@ -25,8 +25,6 @@ public class TypeformVariableJsonConverter : JsonConverter<TypeformVariable>
         throw new JsonException();
       }
 
-      TypeformVariableType type = TypeformVariableType.Unknown;
-      string rawJson = jsonDocument.RootElement.GetRawText();
       var modifiedOptions = new JsonSerializerOptions(options);
       var existingConverter = modifiedOptions.Converters.FirstOrDefault(c => c is TypeformVariableJsonConverter);
       if (existingConverter != null)
@@ -34,27 +32,18 @@ public class TypeformVariableJsonConverter : JsonConverter<TypeformVariable>
         modifiedOptions.Converters.Remove(existingConverter);
       }
 
-      // TODO: This could be optimized maybe to avoid deserializing entire object?
-      // { type: "text" }
       var typePropertyJson = $"{{ \"type\": \"{typeProperty.GetString()}\" }}";
       var defaultVariable = JsonSerializer.Deserialize<TypeformVariable>(typePropertyJson, modifiedOptions);
 
-      type = defaultVariable.Type;
-
-      Type variableInstanceType;
-
-      switch (type)
+      TypeformVariableType type = defaultVariable.Type;
+      Type variableInstanceType = type switch
       {
-        case TypeformVariableType.Text:
-          variableInstanceType = typeof(TypeformVariableText);
-          break;
-        case TypeformVariableType.Number:
-          variableInstanceType = typeof(TypeformVariableNumber);
-          break;
-        default:
-          return defaultVariable;
-      }
+        TypeformVariableType.Text => typeof(TypeformVariableText),
+        TypeformVariableType.Number => typeof(TypeformVariableNumber),
+        _ => typeof(TypeformVariable)
+      };
 
+      var rawJson = jsonDocument.RootElement.GetRawText();
       var result = (TypeformVariable)JsonSerializer.Deserialize(
         rawJson, variableInstanceType, modifiedOptions);
 
