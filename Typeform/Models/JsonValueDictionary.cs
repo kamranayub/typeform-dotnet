@@ -1,6 +1,6 @@
 namespace Typeform.Models;
 
-public class TypeformValueDictionary : Dictionary<string, JsonElement>
+public class TypeformJsonValueDictionary : Dictionary<string, JsonElement>
 {
   public T Value<T>(string key)
   {
