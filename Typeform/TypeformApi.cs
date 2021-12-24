@@ -71,6 +71,7 @@ public class TypeformResponse
     Variables = new TypeformVariablesList();
     Hidden = new TypeformDocumentData();
     Metadata = new TypeformResponseMetadata();
+    Calculated = new TypeformResponseCalculatedFields();
   }
 
   public string ResponseId { get; set; }
@@ -81,6 +82,10 @@ public class TypeformResponse
 
   public DateTime SubmittedAt { get; set; }
 
+  public string Token { get; set; }
+
+  public TypeformResponseCalculatedFields Calculated { get; set; }
+
   public TypeformDocumentData Hidden { get; set; }
 
   public AnswerList Answers { get; set; }
@@ -88,6 +93,11 @@ public class TypeformResponse
   public TypeformVariablesList Variables { get; set; }
 
   public TypeformResponseMetadata Metadata { get; set; }
+}
+
+public class TypeformResponseCalculatedFields
+{
+  public int? Score { get; set; }
 }
 
 public class TypeformResponseMetadata
@@ -248,7 +258,7 @@ public class TypeformVariableText : TypeformVariable
 
 public class TypeformVariableNumber : TypeformVariable
 {
-  public int Number { get; set; }
+  public int? Number { get; set; }
 }
 
 public class TypeformAnswer
@@ -285,7 +295,7 @@ public class TypeformUrlAnswer : TypeformAnswer
 
 public class TypeformNumberAnswer : TypeformAnswer
 {
-  public int Number { get; set; }
+  public int? Number { get; set; }
 }
 
 public class TypeformChoicesAnswer : TypeformAnswer
@@ -318,7 +328,7 @@ public class TypeformChoiceLabel
 
 public class TypeformDateAnswer : TypeformAnswer
 {
-  public DateTime Date { get; set; }
+  public DateTime? Date { get; set; }
 }
 
 public class TypeformPaymentAnswer : TypeformAnswer

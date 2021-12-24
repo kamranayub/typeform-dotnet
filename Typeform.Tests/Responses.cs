@@ -36,6 +36,20 @@ public class ResponsesTests
   }
 
   [Fact]
+  public void Deserializes_Response_Token()
+  {
+    var response = GetResponseFromFixture(0);
+    Assert.Equal("test21085286190ffad1248d17c4135ee56f", response.Token);
+  }
+
+  [Fact]
+  public void Deserializes_Response_Calculated()
+  {
+    var response = GetResponseFromFixture(0);
+    Assert.Equal(2, response.Calculated.Score);
+  }
+
+  [Fact]
   public void Deserializes_Response_Hidden()
   {
     var response = GetResponseFromFixture(0);
