@@ -8,7 +8,7 @@ public class AnswerDeserializationTests
 {
   private T GetAnswerFromFixture<T>(int answerIndex, int itemIndex = 0) where T : TypeformAnswer
   {
-    var responsesFixture = GetResponsesFixture();
+    var responsesFixture = FixturesHelper.GetResponsesFixture();
     var responses = JsonSerializer.Deserialize<TypeformResponsesContainer>(responsesFixture, TypeformClient.DefaultSystemTextJsonSerializerOptions);
 
     return responses!.Items[itemIndex].Answers.GetAnswer<T>(answerIndex);
@@ -118,10 +118,5 @@ public class AnswerDeserializationTests
     var answer = GetAnswerFromFixture<TypeformAnswer>(2);
 
     Assert.Equal(AnswerType.Unknown, answer.Type);
-  }
-
-  private string GetResponsesFixture()
-  {
-    return System.IO.File.ReadAllText("fixtures/responses.json");
   }
 }

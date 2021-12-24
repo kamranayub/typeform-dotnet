@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Refit;
@@ -66,9 +68,126 @@ public class TypeformResponse
   public TypeformResponse()
   {
     Answers = new AnswerList();
+    Variables = new TypeformVariablesList();
+    Hidden = new TypeformDocumentData();
+    Metadata = new TypeformResponseMetadata();
+    Calculated = new TypeformResponseCalculatedFields();
   }
 
+  /// <summary>
+  /// Unique ID for the response. Note that `response_id` values are unique per form but are not unique globally.
+  /// </summary>
+  /// <value></value>
+  public string ResponseId { get; set; }
+
+  public string LandingId { get; set; }
+
+  /// <summary>
+  /// Time of the form landing. In ISO 8601 format, UTC time, to the second, with T as a delimiter between the date and time
+  /// </summary>
+  /// <value></value>
+  public DateTime LandedAt { get; set; }
+
+  /// <summary>
+  /// Time that the form response was submitted. In ISO 8601 format, UTC time, to the second, with T as a delimiter between the date and time.
+  /// </summary>
+  /// <value></value>
+  public DateTime SubmittedAt { get; set; }
+
+  public string Token { get; set; }
+
+  public TypeformResponseCalculatedFields Calculated { get; set; }
+
+  public TypeformDocumentData Hidden { get; set; }
+
   public AnswerList Answers { get; set; }
+
+  public TypeformVariablesList Variables { get; set; }
+
+  /// <summary>
+  /// Metadata about a client's HTTP request.
+  /// </summary>
+  /// <value></value>
+  public TypeformResponseMetadata Metadata { get; set; }
+}
+
+public class TypeformResponseCalculatedFields
+{
+  public int? Score { get; set; }
+}
+
+public class TypeformResponseMetadata
+{
+  public string Browser { get; set; }
+
+  /// <summary>
+  /// IP of the client
+  /// </summary>
+  /// <value></value>
+  public string NetworkId { get; set; }
+
+  /// <summary>
+  /// Derived from user agent
+  /// </summary>
+  /// <value></value>
+  public string Platform { get; set; }
+
+  public string Referer { get; set; }
+
+  public string UserAgent { get; set; }
+}
+
+public class TypeformDocumentData : Dictionary<string, JsonElement>
+{
+  public T Value<T>(string key)
+  {
+    if (typeof(T).IsAssignableFrom(typeof(String)))
+    {
+      return (T)(object)this[key].GetString();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(Boolean)))
+    {
+      return (T)(object)this[key].GetBoolean();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(Int32)))
+    {
+      return (T)(object)this[key].GetInt32();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(Int16)))
+    {
+      return (T)(object)this[key].GetInt16();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(Int64)))
+    {
+      return (T)(object)this[key].GetInt64();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(DateTime)))
+    {
+      return (T)(object)this[key].GetDateTime();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(DateTimeOffset)))
+    {
+      return (T)(object)this[key].GetDateTimeOffset();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(Guid)))
+    {
+      return (T)(object)this[key].GetGuid();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(SByte)))
+    {
+      return (T)(object)this[key].GetSByte();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(Single)))
+    {
+      return (T)(object)this[key].GetSingle();
+    }
+    else if (typeof(T).IsAssignableFrom(typeof(Decimal)))
+    {
+      return (T)(object)this[key].GetDecimal();
+    }
+
+    throw new InvalidOperationException($"Unsupported type {typeof(T)} to deserialize from JSON");
+  }
 }
 
 public class AnswerList : List<TypeformAnswer>
@@ -76,6 +195,19 @@ public class AnswerList : List<TypeformAnswer>
   public T GetAnswer<T>(int index) where T : TypeformAnswer
   {
     return (T)this[index];
+  }
+}
+
+public class TypeformVariablesList : List<TypeformVariable>
+{
+  public T GetVariable<T>(int index) where T : TypeformVariable
+  {
+    return (T)this[index];
+  }
+
+  public T GetVariable<T>(string key) where T : TypeformVariable
+  {
+    return (T)this.FirstOrDefault(v => v.Key == key);
   }
 }
 
@@ -127,6 +259,32 @@ public enum QuestionType
   PhoneNumber
 }
 
+public enum TypeformVariableType
+{
+  Unknown,
+
+  Number,
+
+  Text,
+}
+
+public class TypeformVariable
+{
+  public string Key { get; set; }
+
+  public TypeformVariableType Type { get; set; }
+}
+
+public class TypeformVariableText : TypeformVariable
+{
+  public string Text { get; set; }
+}
+
+public class TypeformVariableNumber : TypeformVariable
+{
+  public int? Number { get; set; }
+}
+
 public class TypeformAnswer
 {
   public TypeformAnswerField Field { get; set; }
@@ -161,7 +319,7 @@ public class TypeformUrlAnswer : TypeformAnswer
 
 public class TypeformNumberAnswer : TypeformAnswer
 {
-  public int Number { get; set; }
+  public int? Number { get; set; }
 }
 
 public class TypeformChoicesAnswer : TypeformAnswer
@@ -194,15 +352,17 @@ public class TypeformChoiceLabel
 
 public class TypeformDateAnswer : TypeformAnswer
 {
-  public DateTime Date { get; set; }
+  public DateTime? Date { get; set; }
 }
 
-public class TypeformPaymentAnswer : TypeformAnswer {
+public class TypeformPaymentAnswer : TypeformAnswer
+{
 
   public TypeformPaymentAnswerData Payment { get; set; }
 }
 
-public class TypeformPaymentAnswerData {
+public class TypeformPaymentAnswerData
+{
   public string Amount { get; set; }
 
   public string Last4 { get; set; }
