@@ -1,10 +1,14 @@
 namespace Typeform;
 
+/// <summary>
+/// The public Typeform API contract. Use with Refit to generate a client.
+/// </summary>
 public interface ITypeformApi
 {
   /// <summary>
   /// Typeform Responses API
   /// </summary>
+  /// <param name="accessToken">The OAuth or Personal Access Token to authorize the call</param>
   /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
   /// <returns></returns>
   [Get("/forms/{form_id}/responses")]
@@ -15,6 +19,7 @@ public interface ITypeformApi
   /// <summary>
   /// Typeform Responses API
   /// </summary>
+  /// <param name="accessToken">The OAuth or Personal Access Token to authorize the call</param>
   /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
   /// <param name="queryParams">Optional query parameters to pass to Responses endpoint</param>
   /// <returns></returns>
