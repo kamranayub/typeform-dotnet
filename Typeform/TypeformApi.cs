@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -81,6 +82,8 @@ public class TypeformResponse
   public TypeformDocumentData Hidden { get; set; }
 
   public AnswerList Answers { get; set; }
+
+  public TypeformVariablesList Variables { get; set; }
 }
 
 public class TypeformDocumentData : Dictionary<string, JsonElement>
@@ -144,6 +147,19 @@ public class AnswerList : List<TypeformAnswer>
   }
 }
 
+public class TypeformVariablesList : List<TypeformVariable>
+{
+  public T GetVariable<T>(int index) where T : TypeformVariable
+  {
+    return (T)this[index];
+  }
+
+  public T GetVariable<T>(string key) where T : TypeformVariable
+  {
+    return (T)this.FirstOrDefault(v => v.Key == key);
+  }
+}
+
 public enum AnswerType
 {
   Unknown,
@@ -190,6 +206,32 @@ public enum QuestionType
   YesNo,
   [EnumMember(Value = "phone_number")]
   PhoneNumber
+}
+
+public enum TypeformVariableType
+{
+  Unknown,
+
+  Number,
+
+  Text,
+}
+
+public class TypeformVariable
+{
+  public string Key { get; set; }
+
+  public TypeformVariableType Type { get; set; }
+}
+
+public class TypeformVariableText : TypeformVariable
+{
+  public string Text { get; set; }
+}
+
+public class TypeformVariableNumber : TypeformVariable
+{
+  public int Number { get; set; }
 }
 
 public class TypeformAnswer

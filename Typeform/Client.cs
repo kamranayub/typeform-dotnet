@@ -12,11 +12,16 @@ namespace Typeform
       PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy(),
       Converters = {
         new TypeformAnswerJsonConverter(),
+        new TypeformVariableJsonConverter(),
         new JsonStringEnumMemberConverter(
           new JsonStringEnumMemberConverterOptions() {
             DeserializationFailureFallbackValue = AnswerType.Unknown
-          }, typeof(AnswerType))
-        }
+          }, typeof(AnswerType)),
+        new JsonStringEnumMemberConverter(
+          new JsonStringEnumMemberConverterOptions() {
+            DeserializationFailureFallbackValue = TypeformVariableType.Unknown
+          }, typeof(TypeformVariableType))
+        },
     };
 
     /// <summary>

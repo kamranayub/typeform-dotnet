@@ -48,17 +48,20 @@ public class ResponsesTests
   public void Deserializes_Response_Variables_Number()
   {
     var response = GetResponseFromFixture(0);
-    Assert.Equal("score", response.Variables[0].Key);
-    Assert.Equal("number", response.Variables[0].Type);
-    Assert.Equal(2, response.Variables[0].Number);
+    var variable = response.Variables.GetVariable<TypeformVariableNumber>("score");
+    Assert.Equal("score", variable.Key);
+    Assert.Equal(TypeformVariableType.Number, variable.Type);
+    Assert.Equal(2, variable.Number);
   }
 
   [Fact]
   public void Deserializes_Response_Variables_Text()
   {
     var response = GetResponseFromFixture(0);
-    Assert.Equal("name", response.Variables[0].Key);
-    Assert.Equal("text", response.Variables[0].Type);
-    Assert.Equal("typeform", response.Variables[0].Text);
+    var variable = response.Variables.GetVariable<TypeformVariableText>("name");
+
+    Assert.Equal("name", variable.Key);
+    Assert.Equal(TypeformVariableType.Text, variable.Type);
+    Assert.Equal("typeform", variable.Text);
   }
 }
