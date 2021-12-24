@@ -16,4 +16,4 @@ jobs:
     - name: Push
       run: dotnet nuget push Typeform.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN}
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
