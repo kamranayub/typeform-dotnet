@@ -37,16 +37,16 @@ public class TypeformAnswerJsonConverter : JsonConverter<TypeformAnswer>
       TypeformAnswerType type = defaultAnswer.Type;
       Type answerInstanceType = type switch
       {
-        TypeformAnswerType.Boolean => typeof(TypeformBooleanAnswer),
-        TypeformAnswerType.Choice => typeof(TypeformChoiceAnswer),
-        TypeformAnswerType.Choices => typeof(TypeformChoicesAnswer),
-        TypeformAnswerType.Date => typeof(TypeformDateAnswer),
-        TypeformAnswerType.Email => typeof(TypeformEmailAnswer),
-        TypeformAnswerType.FileUrl => typeof(TypeformFileUrlAnswer),
-        TypeformAnswerType.Number => typeof(TypeformNumberAnswer),
-        TypeformAnswerType.Payment => typeof(TypeformPaymentAnswer),
-        TypeformAnswerType.Text => typeof(TypeformTextAnswer),
-        TypeformAnswerType.Url => typeof(TypeformUrlAnswer),
+        TypeformAnswerType.Boolean => typeof(TypeformAnswerBoolean),
+        TypeformAnswerType.Choice => typeof(TypeformAnswerChoice),
+        TypeformAnswerType.Choices => typeof(TypeformAnswerChoices),
+        TypeformAnswerType.Date => typeof(TypeformAnswerDate),
+        TypeformAnswerType.Email => typeof(TypeformAnswerEmail),
+        TypeformAnswerType.FileUrl => typeof(TypeformAnswerFileUrl),
+        TypeformAnswerType.Number => typeof(TypeformAnswerNumber),
+        TypeformAnswerType.Payment => typeof(TypeformAnswerPayment),
+        TypeformAnswerType.Text => typeof(TypeformAnswerText),
+        TypeformAnswerType.Url => typeof(TypeformAnswerUrl),
         _ => typeof(TypeformAnswer)
       };
 

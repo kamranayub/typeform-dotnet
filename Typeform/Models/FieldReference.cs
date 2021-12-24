@@ -1,6 +1,6 @@
 namespace Typeform.Models;
 
-public class TypeformAnswerField
+public class TypeformFieldReference
 {
   /// <summary>
   /// The unique id of the form field the answer refers to.
@@ -26,5 +26,6 @@ public class TypeformAnswerField
   /// The form field's title which the answer is related to.
   /// </summary>
   /// <value></value>
+  /// <remarks>May not be used</remarks>
   public string Title { get; set; }
 }

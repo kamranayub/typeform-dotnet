@@ -10,7 +10,7 @@ public class TypeformResponse
     Variables = new TypeformResponseVariables();
     Hidden = new JsonValueDictionary();
     Metadata = new TypeformResponseMetadata();
-    Calculated = new TypeformResponseCalculatedFields();
+    Calculated = new TypeformResponseCalculated();
   }
 
   /// <summary>
@@ -35,7 +35,7 @@ public class TypeformResponse
 
   public string Token { get; set; }
 
-  public TypeformResponseCalculatedFields Calculated { get; set; }
+  public TypeformResponseCalculated Calculated { get; set; }
 
   public JsonValueDictionary Hidden { get; set; }
 

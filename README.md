@@ -57,6 +57,87 @@ public class HomeController : Controller {
 }
 ```
 
+## Responses API
+
+The Typeform Responses API returns form responses that include answers. Each answer can be a different type and to accomodate this, the SDK deserializes into different class implementations based on the answer `type` discriminator.
+
+### Retrieving an answer by type
+
+If you know what type an answer is _supposed_ to be, you can use the `Answers.GetAnswer<T>(index)` method
+to retrieve an answer at an index that is the expected type:
+
+```c#
+var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
+
+// Retrieve first response's answer as Text type (by index)
+var answerText = responses.Items[0].Answers.GetAnswer<TypeformAnswerText>(0);
+```
+
+If you _do not_ know what type an answer is _supposed_ to be, you can inspect its type:
+
+```c#
+var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
+
+// Retrieve first response's answer type
+var firstAnswerType = responses.Items[0].Answers[0].Type;
+
+if (firstAnswerType == TypeformAnswerType.Text) {
+  var firstAnswer = responses.Items[0].Answers[0] as TypeformAnswerText;
+}
+```
+
+Based on Typeform's response structure, it's not easily possible to get static typing of the answers
+without knowing the type in advance.
+
+### Answer type mapping
+
+For reference, this is the mapping for each answer type used:
+
+```c#
+// Get the answer type enum value
+var type = answer.Type;
+
+// Determine the class type to map to
+Type answerInstanceType = type switch
+{
+  TypeformAnswerType.Boolean => typeof(TypeformAnswerBoolean),
+  TypeformAnswerType.Choice => typeof(TypeformAnswerChoice),
+  TypeformAnswerType.Choices => typeof(TypeformAnswerChoices),
+  TypeformAnswerType.Date => typeof(TypeformAnswerDate),
+  TypeformAnswerType.Email => typeof(TypeformAnswerEmail),
+  TypeformAnswerType.FileUrl => typeof(TypeformAnswerFileUrl),
+  TypeformAnswerType.Number => typeof(TypeformAnswerNumber),
+  TypeformAnswerType.Payment => typeof(TypeformAnswerPayment),
+  TypeformAnswerType.Text => typeof(TypeformAnswerText),
+  TypeformAnswerType.Url => typeof(TypeformAnswerUrl),
+  _ => typeof(TypeformAnswer)
+};
+```
+
+The SDK deserialization takes care of deserializing to the correct type so you can safely cast it.
+
+### Retrieving a variable's type
+
+A form variables collection is similar to answers. You can use the same pattern to get variables by type.
+
+**Variables By Index**
+
+```c#
+var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
+
+// Retrieve first response's variable (by index)
+var answerText = responses.Items[0].Variables.GetVariable<TypeformVariableText>(0);
+```
+
+**Variables By Key**
+
+```c#
+var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
+
+// Retrieve first response's variable (by key)
+var answerText = responses.Items[0].Variables.GetVariable<TypeformVariableText>("name");
+```
+
 ## TODO
 
 - [x] Create a basic API client

@@ -1,52 +1,72 @@
+using System.Runtime.Serialization;
+
 namespace Typeform.Models;
+
+
+public enum TypeformAnswerType
+{
+  Unknown,
+  Text,
+  Choice,
+  Choices,
+  Email,
+  Url,
+  [EnumMember(Value = "file_url")]
+  FileUrl,
+  Boolean,
+  Number,
+  Date,
+  Payment
+}
+
 
 public class TypeformAnswer
 {
-  public TypeformAnswerField Field { get; set; }
+  public TypeformFieldReference Field { get; set; }
 
   public TypeformAnswerType Type { get; set; }
 }
 
 
-public class TypeformTextAnswer : TypeformAnswer
+public class TypeformAnswerText : TypeformAnswer
 {
   public string Text { get; set; }
 }
 
 
-public class TypeformBooleanAnswer : TypeformAnswer
+public class TypeformAnswerBoolean : TypeformAnswer
 {
   public bool Boolean { get; set; }
 }
 
-public class TypeformEmailAnswer : TypeformAnswer
+public class TypeformAnswerEmail : TypeformAnswer
 {
   public string Email { get; set; }
 }
 
-public class TypeformFileUrlAnswer : TypeformAnswer
+public class TypeformAnswerFileUrl : TypeformAnswer
 {
   public Uri FileUrl { get; set; }
 }
 
-public class TypeformUrlAnswer : TypeformAnswer
+public class TypeformAnswerUrl : TypeformAnswer
 {
   public Uri Url { get; set; }
 }
 
-public class TypeformNumberAnswer : TypeformAnswer
+public class TypeformAnswerNumber : TypeformAnswer
 {
   public int? Number { get; set; }
 }
 
-public class TypeformChoicesAnswer : TypeformAnswer
+public class TypeformAnswerChoices : TypeformAnswer
 {
-  public TypeformChoicesLabels Choices { get; set; }
+  public TypeformAnswerChoicesData Choices { get; set; }
 }
 
-public class TypeformChoicesLabels
+public class TypeformAnswerChoicesData
 {
-  public TypeformChoicesLabels()
+  public TypeformAnswerChoicesData()
   {
     Labels = new List<string>();
   }
@@ -55,30 +75,30 @@ public class TypeformChoicesLabels
   public string Other { get; set; }
 }
 
-public class TypeformChoiceAnswer : TypeformAnswer
+public class TypeformAnswerChoice : TypeformAnswer
 {
-  public TypeformChoiceLabel Choice { get; set; }
+  public TypeformAnswerChoiceData Choice { get; set; }
 }
 
-public class TypeformChoiceLabel
+public class TypeformAnswerChoiceData
 {
   public string Label { get; set; }
 
   public string Other { get; set; }
 }
 
-public class TypeformDateAnswer : TypeformAnswer
+public class TypeformAnswerDate : TypeformAnswer
 {
   public DateTime? Date { get; set; }
 }
 
-public class TypeformPaymentAnswer : TypeformAnswer
+public class TypeformAnswerPayment : TypeformAnswer
 {
 
-  public TypeformPaymentAnswerData Payment { get; set; }
+  public TypeformAnswerPaymentData Payment { get; set; }
 }
 
-public class TypeformPaymentAnswerData
+public class TypeformAnswerPaymentData
 {
   public string Amount { get; set; }
 

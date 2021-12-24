@@ -17,7 +17,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Text_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformTextAnswer>(0);
+    var answer = GetAnswerFromFixture<TypeformAnswerText>(0);
 
     Assert.Equal(TypeformAnswerType.Text, answer.Type);
     Assert.Equal("Job opportunities", answer.Text);
@@ -26,7 +26,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Boolean_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformBooleanAnswer>(1);
+    var answer = GetAnswerFromFixture<TypeformAnswerBoolean>(1);
 
     Assert.Equal(TypeformAnswerType.Boolean, answer.Type);
     Assert.False(answer.Boolean);
@@ -35,7 +35,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Email_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformEmailAnswer>(4);
+    var answer = GetAnswerFromFixture<TypeformAnswerEmail>(4);
 
     Assert.Equal(TypeformAnswerType.Email, answer.Type);
     Assert.Equal("lian1078@other.com", answer.Email);
@@ -44,7 +44,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Number_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformNumberAnswer>(5);
+    var answer = GetAnswerFromFixture<TypeformAnswerNumber>(5);
 
     Assert.Equal(TypeformAnswerType.Number, answer.Type);
     Assert.Equal(1, answer.Number);
@@ -53,7 +53,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Choices_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformChoicesAnswer>(10);
+    var answer = GetAnswerFromFixture<TypeformAnswerChoices>(10);
 
     Assert.Equal(TypeformAnswerType.Choices, answer.Type);
     Assert.NotNull(answer.Choices);
@@ -65,7 +65,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Date_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformDateAnswer>(11);
+    var answer = GetAnswerFromFixture<TypeformAnswerDate>(11);
 
     Assert.Equal(TypeformAnswerType.Date, answer.Type);
     var expectedDate = new DateTime(2012, 3, 20, 0, 0, 0, DateTimeKind.Utc);
@@ -75,7 +75,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Choice_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformChoiceAnswer>(12);
+    var answer = GetAnswerFromFixture<TypeformAnswerChoice>(12);
 
     Assert.Equal(TypeformAnswerType.Choice, answer.Type);
     Assert.NotNull(answer.Choice);
@@ -85,7 +85,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_FileUrl_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformFileUrlAnswer>(1, itemIndex: 1);
+    var answer = GetAnswerFromFixture<TypeformAnswerFileUrl>(1, itemIndex: 1);
     var expectedUri = new Uri("https://api.typeform.com/forms/lT9Z2j/responses/7f46165474d11ee5836777d85df2cdab/fields/X4BgU2f1K6tG/files/afd8258fd453-aerial_view_rural_city_latvia_valmiera_urban_district_48132860.jpg");
 
     Assert.Equal(TypeformAnswerType.FileUrl, answer.Type);
@@ -95,7 +95,7 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Url_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformUrlAnswer>(15);
+    var answer = GetAnswerFromFixture<TypeformAnswerUrl>(15);
     var expectedUri = new Uri("https://www.google.com");
 
     Assert.Equal(TypeformAnswerType.Url, answer.Type);
@@ -105,8 +105,8 @@ public class AnswerDeserializationTests
   [Fact]
   public void Deserializes_Answer_Payment_Field()
   {
-    var answer = GetAnswerFromFixture<TypeformPaymentAnswer>(16);
-    var expectedPaymentData = new TypeformPaymentAnswerData()
+    var answer = GetAnswerFromFixture<TypeformAnswerPayment>(16);
+    var expectedPaymentData = new TypeformAnswerPaymentData()
     {
       Amount = "$1.00",
       Name = "Franz Tester",

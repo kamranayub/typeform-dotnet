@@ -1,6 +1,6 @@
 namespace Typeform.Models;
 
-public class TypeformResponseCalculatedFields
+public class TypeformResponseCalculated
 {
   public int? Score { get; set; }
 }
