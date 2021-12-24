@@ -68,7 +68,9 @@ public class TypeformResponse
   public TypeformResponse()
   {
     Answers = new AnswerList();
+    Variables = new TypeformVariablesList();
     Hidden = new TypeformDocumentData();
+    Metadata = new TypeformResponseMetadata();
   }
 
   public string ResponseId { get; set; }
@@ -84,6 +86,21 @@ public class TypeformResponse
   public AnswerList Answers { get; set; }
 
   public TypeformVariablesList Variables { get; set; }
+
+  public TypeformResponseMetadata Metadata { get; set; }
+}
+
+public class TypeformResponseMetadata
+{
+  public string Browser { get; set; }
+
+  public string NetworkId { get; set; }
+
+  public string Platform { get; set; }
+
+  public string Referer { get; set; }
+
+  public string UserAgent { get; set; }
 }
 
 public class TypeformDocumentData : Dictionary<string, JsonElement>

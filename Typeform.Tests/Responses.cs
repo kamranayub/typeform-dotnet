@@ -64,4 +64,24 @@ public class ResponsesTests
     Assert.Equal(TypeformVariableType.Text, variable.Type);
     Assert.Equal("typeform", variable.Text);
   }
+
+  [Fact]
+  public void Deserializes_Response_Metadata()
+  {
+    var response = GetResponseFromFixture(0);
+    var expectedMetadata = new TypeformResponseMetadata()
+    {
+      Browser = "default",
+      NetworkId = "responsdent_network_id",
+      Platform = "other",
+      Referer = "https://user_id.typeform.com/to/lR6F4j",
+      UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8"
+    };
+
+    Assert.Equal(expectedMetadata.Browser, response.Metadata.Browser);
+    Assert.Equal(expectedMetadata.NetworkId, response.Metadata.NetworkId);
+    Assert.Equal(expectedMetadata.Platform, response.Metadata.Platform);
+    Assert.Equal(expectedMetadata.Referer, response.Metadata.Referer);
+    Assert.Equal(expectedMetadata.UserAgent, response.Metadata.UserAgent);
+  }
 }
