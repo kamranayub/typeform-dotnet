@@ -4,7 +4,8 @@ A .NET Standard 2.0 SDK wrapper built with [Refit](https://github.com/reactiveui
 
 ## Supported Endpoints
 
-- [Retrieve Responses](https://developer.typeform.com/responses/reference/retrieve-responses/) (https://api.typeform.com/forms/{form_id}/responses)
+- [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
+- [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
 
 ## Usage
 
@@ -167,7 +168,7 @@ var answerText = responses.Items[0].Variables.GetVariable<TypeformVariableText>(
 - [x] Target .NET Standard / maximize compatibility
 - [ ] Support for [Responses API](https://developer.typeform.com/responses/)
   - [x] [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
-  - [ ] [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
+  - [x] [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
   - [ ] [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
   - [ ] [Retrieve Form Insights](https://developer.typeform.com/responses/reference/retrieve-form-insights/)
 - [ ] Support for [Webhooks API](https://developer.typeform.com/webhooks/)
