@@ -74,12 +74,24 @@ public class TypeformResponse
     Calculated = new TypeformResponseCalculatedFields();
   }
 
+  /// <summary>
+  /// Unique ID for the response. Note that `response_id` values are unique per form but are not unique globally.
+  /// </summary>
+  /// <value></value>
   public string ResponseId { get; set; }
 
   public string LandingId { get; set; }
 
+  /// <summary>
+  /// Time of the form landing. In ISO 8601 format, UTC time, to the second, with T as a delimiter between the date and time
+  /// </summary>
+  /// <value></value>
   public DateTime LandedAt { get; set; }
 
+  /// <summary>
+  /// Time that the form response was submitted. In ISO 8601 format, UTC time, to the second, with T as a delimiter between the date and time.
+  /// </summary>
+  /// <value></value>
   public DateTime SubmittedAt { get; set; }
 
   public string Token { get; set; }
@@ -92,6 +104,10 @@ public class TypeformResponse
 
   public TypeformVariablesList Variables { get; set; }
 
+  /// <summary>
+  /// Metadata about a client's HTTP request.
+  /// </summary>
+  /// <value></value>
   public TypeformResponseMetadata Metadata { get; set; }
 }
 
@@ -104,8 +120,16 @@ public class TypeformResponseMetadata
 {
   public string Browser { get; set; }
 
+  /// <summary>
+  /// IP of the client
+  /// </summary>
+  /// <value></value>
   public string NetworkId { get; set; }
 
+  /// <summary>
+  /// Derived from user agent
+  /// </summary>
+  /// <value></value>
   public string Platform { get; set; }
 
   public string Referer { get; set; }
