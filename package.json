@@ -1,0 +1,50 @@
+{
+  "name": "typeform-dotnet",
+  "version": "0.0.0-development",
+  "description": ".NET Standard 2.0 library for Typeform's API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamranayub/typeform-dotnet.git"
+  },
+  "keywords": [
+    "typeform",
+    "surveys",
+    "forms",
+    "dotnet"
+  ],
+  "author": "Kamran Ayub",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kamranayub/typeform-dotnet/issues"
+  },
+  "homepage": "https://github.com/kamranayub/typeform-dotnet#readme",
+  "devDependencies": {
+    "semantic-release": "^18.0.1",
+    "semantic-release-nuget": "^1.1.1"
+  },
+  "release": {
+    "branches": ["main", "publish"],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "./plugins/prepare-nuget-release.js",
+      ["semantic-release-nuget", {
+        "pushUrl": "https://api.nuget.org/v3/index.json",
+        "packArguments": ["/p:Version=${NUGET_VERSION}"]
+      }],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            "*.nupkg"
+          ]
+        }
+      ]
+    ]
+  }
+}
