@@ -175,7 +175,7 @@ var answerText = responses.Items[0].Variables.GetVariable<TypeformVariableText>(
 - [ ] Support for [Responses API](https://developer.typeform.com/responses/)
   - [x] [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
   - [x] [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
-  - [ ] [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
+  - [x] [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
   - [ ] [Retrieve Form Insights](https://developer.typeform.com/responses/reference/retrieve-form-insights/)
 - [ ] Support for [Webhooks API](https://developer.typeform.com/webhooks/)
 - [ ] Support for [Create API](https://developer.typeform.com/create/)
