@@ -67,4 +67,44 @@ public class TypeformClient
 
     return typeformApi;
   }
+
+  private static async Task<(int readCount, byte[] buffer)> ReadChunkAsync(Stream stream, int chunkSize)
+  {
+    var buffer = new byte[chunkSize];
+    var readCount = 0;
+
+    while (readCount < chunkSize)
+    {
+      var bytesRead = await stream.ReadAsync(buffer, readCount, chunkSize - readCount);
+
+      if (bytesRead == 0)
+      {
+        break;
+      }
+
+      readCount += bytesRead;
+    }
+
+    return (readCount, buffer);
+  }
+
+  /// <summary>
+  /// TODO: Move?
+  /// </summary>
+  /// <param name="stream"></param>
+  /// <returns></returns>
+  public static async Task<byte[]> ReadChunkedStreamAsync(Stream stream)
+  {
+    IEnumerable<byte> contents = new byte[0];
+    int lastRead;
+
+    do
+    {
+      var (readCount, buffer) = await TypeformClient.ReadChunkAsync(stream, 4096);
+      lastRead = readCount;
+      contents = contents.Concat(buffer);
+    } while (lastRead > 0);
+
+    return contents.ToArray();
+  }
 }

@@ -11,10 +11,10 @@ public interface ITypeformApi
   /// <param name="accessToken">The OAuth or Personal Access Token to authorize the call</param>
   /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
   /// <returns></returns>
-  [Get("/forms/{form_id}/responses")]
+  [Get("/forms/{formId}/responses")]
   Task<TypeformResponseItems> GetFormResponsesAsync(
     [Authorize("Bearer")] string accessToken,
-    [AliasAs("form_id")] string formId);
+    string formId);
 
   /// <summary>
   /// Typeform Responses API
@@ -23,21 +23,34 @@ public interface ITypeformApi
   /// <param name="formId">Unique ID for the form. Find in your form URL. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7.</param>
   /// <param name="queryParams">Optional query parameters to pass to Responses endpoint</param>
   /// <returns></returns>
-  [Get("/forms/{form_id}/responses")]
+  [Get("/forms/{formId}/responses")]
   Task<TypeformResponseItems> GetFormResponsesAsync(
     [Authorize("Bearer")] string accessToken,
-    [AliasAs("form_id")] string formId,
+    string formId,
     TypeformGetResponsesParameters queryParams);
 
   /// <summary>
   /// Delete responses to a form.
   /// </summary>
   /// <param name="includedResponseIds">List of response_id values of the responses to delete. You can list up to 1000 tokens.</param>
-  [Delete("/forms/{form_id}/responses")]
+  [Delete("/forms/{formId}/responses")]
   Task<TypeformResponseItems> DeleteFormResponsesAsync(
     [Authorize("Bearer")] string accessToken,
-    [AliasAs("form_id")] string formId,
+    string formId,
     [AliasAs("included_response_ids")] string[] includedResponseIds);
+
+  /// <summary>
+  /// Delete responses to a form.
+  /// </summary>
+  /// <param name="includedResponseIds">List of response_id values of the responses to delete. You can list up to 1000 tokens.</param>
+  [Get("/forms/{formId}/responses/{responseId}/fields/{fieldId}/files/{filename}")]
+  Task<Stream> GetFormResponseFile(
+    [Authorize("Bearer")] string accessToken,
+    string formId,
+    string responseId,
+    string fieldId,
+    string filename,
+    bool inline = false);
 }
 
 public class TypeformGetResponsesParameters
