@@ -16,7 +16,7 @@ To create an instance of the Refit `ITypeformApi` client:
 ```c#
 using Typeform;
 
-var client = TypeformClient.CreateApi(settings);
+var client = TypeformClient.CreateApi();
 ```
 
 ### Services / Dependency Injection
@@ -30,6 +30,12 @@ using Typeform;
 // You can always do this
 services.AddRefitClient<ITypeformApi>(TypeformClient.DefaultSettings);
 ```
+
+### Customizing Refit Settings
+
+`TypeformClient.DefaultSettings` contains the default Refit settings used for the API. You can create new derived settings to pass if you need to through the `CreateApi` static method.
+
+`TypeformClient.DefaultSystemTextJsonSerializerOptions` contains the default `System.Text.Json` serializer options. This handles naming policy and JSON deserialization according to the requirements of the Typeform API.
 
 ### Consuming the API
 
