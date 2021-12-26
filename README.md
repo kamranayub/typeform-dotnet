@@ -5,6 +5,7 @@ A .NET Standard 2.0 SDK wrapper built with [Refit](https://github.com/reactiveui
 ## Supported Endpoints
 
 - [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
+- [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
 - [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
 
 ## Usage

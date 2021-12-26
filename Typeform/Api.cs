@@ -44,7 +44,7 @@ public interface ITypeformApi
   /// </summary>
   /// <param name="includedResponseIds">List of response_id values of the responses to delete. You can list up to 1000 tokens.</param>
   [Get("/forms/{formId}/responses/{responseId}/fields/{fieldId}/files/{filename}")]
-  Task<Stream> GetFormResponseFile(
+  Task<Stream> GetFormResponseFileStreamAsync(
     [Authorize("Bearer")] string accessToken,
     string formId,
     string responseId,

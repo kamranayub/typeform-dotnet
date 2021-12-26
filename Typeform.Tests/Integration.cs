@@ -43,7 +43,7 @@ public class IntegrationTests
     // TODO: This file_url is available in the response
     // and it would be nice to figure out how to pass
     // that in and get the downloaded file
-    var fileStream = await _api.GetFormResponseFile(
+    var fileStream = await _api.GetFormResponseFileStreamAsync(
       accessToken,
       "Mj5yRSHu",
       "8kvscilox7xp42d58c8kvsc39l6ct2rg",
