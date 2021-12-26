@@ -43,7 +43,7 @@ public class IntegrationTests
     // TODO: This file_url is available in the response
     // and it would be nice to figure out how to pass
     // that in and get the downloaded file
-    var fileStream = await _api.GetFormResponseFileStreamAsync(
+    var fileResponse = await _api.GetFormResponseFileStreamAsync(
       accessToken,
       "Mj5yRSHu",
       "8kvscilox7xp42d58c8kvsc39l6ct2rg",
@@ -51,7 +51,7 @@ public class IntegrationTests
       "c001c8c70d77-derwinternaht.zip"
     );
 
-    var contents = await TypeformClient.ReadChunkedStreamAsync(fileStream);
+    var contents = await fileResponse.ReadAllBytesAsync();
     Assert.NotNull(contents);
     Assert.Equal(1_699_840, contents.Length);
 

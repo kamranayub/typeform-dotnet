@@ -44,13 +44,62 @@ public interface ITypeformApi
   /// </summary>
   /// <param name="includedResponseIds">List of response_id values of the responses to delete. You can list up to 1000 tokens.</param>
   [Get("/forms/{formId}/responses/{responseId}/fields/{fieldId}/files/{filename}")]
-  Task<Stream> GetFormResponseFileStreamAsync(
+  Task<ApiResponse<Stream>> GetFormResponseFileStreamAsync(
     [Authorize("Bearer")] string accessToken,
     string formId,
     string responseId,
     string fieldId,
-    string filename,
-    bool inline = false);
+    string filename);
+}
+
+public static class TypeformStreamExtensions
+{
+
+  /// <summary>
+  /// Default chunk size in bytes to read
+  /// </summary>
+  public const int DefaultStreamChunkSizeInBytes = 1024 * 4096;
+
+  /// <summary>
+  /// Reads from an Http response stream in chunks, returning all bytes.
+  /// </summary>
+  /// <param name="response">The Refit API response from Typeform containing a response stream</param>
+  /// <param name="chunkBytes">The chunk size to read in bytes until the end of the stream (default: 4MB)</param>
+  /// <returns></returns>
+  public static async Task<byte[]> ReadAllBytesAsync(this ApiResponse<Stream> response, int chunkBytes = DefaultStreamChunkSizeInBytes)
+  {
+    IEnumerable<byte> contents = new byte[0];
+    int lastRead;
+
+    do
+    {
+      var (readCount, buffer) = await ReadChunkAsync(response.Content, chunkBytes);
+      lastRead = readCount;
+      contents = contents.Concat(buffer);
+    } while (lastRead > 0);
+
+    return contents.ToArray();
+  }
+
+  private static async Task<(int readCount, byte[] buffer)> ReadChunkAsync(Stream stream, int chunkBytes)
+  {
+    var chunkBuffer = new byte[chunkBytes];
+    var totalBytesRead = 0;
+
+    while (totalBytesRead < chunkBytes)
+    {
+      var bytesRead = await stream.ReadAsync(chunkBuffer, totalBytesRead, chunkBytes - totalBytesRead);
+
+      if (bytesRead == 0)
+      {
+        break;
+      }
+
+      totalBytesRead += bytesRead;
+    }
+
+    return (totalBytesRead, chunkBuffer);
+  }
 }
 
 public class TypeformGetResponsesParameters

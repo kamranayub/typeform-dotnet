@@ -65,7 +65,9 @@ public class HomeController : Controller {
 }
 ```
 
-## Responses API
+# Responses API
+
+## Retrieve Responses
 
 The Typeform Responses API returns form responses that include answers. Each answer can be a different type and to accomodate this, the SDK deserializes into different class implementations based on the answer `type` discriminator.
 
@@ -165,6 +167,37 @@ var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
 // Retrieve first response's variable (by key)
 var answerText = responses.Items[0].Variables.GetVariable<TypeformVariableText>("name");
 ```
+
+## Delete Responses
+
+Use `ITypeformApi.DeleteResponsesAsync()` and pass a list of response IDs to delete.
+
+## Retrieve Response File
+
+Uploaded files to a form can be downloaded via the REST API, however, you **cannot** rely on the values of `file_url`
+in Form Responses. Instead, you can manually specify the `form_id`, `response_id`, `field_id` and `filename` to download
+using `ITypeformApi.GetFormResponseFileStreamAsync()`.
+
+The return value of this method is a Refit `ApiResponse<Stream>` and you can manipulate the `Stream` response any way
+you see fit. There is a `ReadAllBytesAsync()` extension method that will read the full bytes using a chunked buffer:
+
+```c#
+ITypeformApi typeformApi = TypeformClient.CreateApi();
+
+ApiResponse<Stream> fileResponse = await typeformApi.GetFormResponseFileStreamAsync(
+  accessToken,
+  formId,
+  responseId,
+  fieldId,
+  filename
+);
+
+var contents = await fileResponse.ReadAllBytesAsync(/* chunkSize: <optional value in bytes> */);
+
+await System.IO.File.WriteAllBytesAsync(filename, contents);
+```
+
+If you need to download a file using a `FileUrl` value from the Form Responses API, you will need to construct your own `HttpClient` to download it [like this example](https://dev.to/1001binary/download-file-using-httpclient-wrapper-asynchronously-1p6).
 
 ## TODO
 
