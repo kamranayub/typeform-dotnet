@@ -1,12 +1,33 @@
 # typeform-dotnet
 
+[![.NET](https://github.com/kamranayub/typeform-dotnet/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/kamranayub/typeform-dotnet/actions/workflows/dotnet.yml) [![Nuget](https://img.shields.io/nuget/v/Typeform)](https://nuget.org/packages/Typeform) [![Nuget](https://img.shields.io/nuget/dt/Typeform?label=nuget%20downloads)](https://nuget.org/packages/Typeform)
+
 A .NET Standard 2.0 SDK wrapper built with [Refit](https://github.com/reactiveui/refit) around Typeform's API.
+
+## Twitch Streams
+
+This SDK is (mostly) built in public on Twitch. Watch the collection here:
+
+https://www.twitch.tv/collections/Lm3OF4Q0xBZaSA
 
 ## Supported Endpoints
 
 - [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
 - [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
 - [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
+
+
+## Install
+
+via [Nuget](https://nuget.org/packages/Typeform)
+
+```sh
+# Package Manager
+Install-Package Typeform
+
+# dotnet
+dotnet add package Typeform
+```
 
 ## Usage
 
