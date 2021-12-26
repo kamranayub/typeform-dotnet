@@ -4,11 +4,24 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>10.0</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
-    <NuspecProperties>version=$(Version)</NuspecProperties>
+    <OutputPath>lib</OutputPath>
+
+    <!-- Nuget Publishing -->
+    <PackageId>Typeform</PackageId>
+    <Description> Typeform API .NET Standard 2.0 wrapper built with Refit. For detailed usage, see https://github.com/kamranayub/typeform-dotnet/blob/main/README.md</Description>
+    <Authors>Kamran Ayub</Authors>
+    <Copyright>Copyright 2021 Kamran Ayub</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>http://github.com/kamranayub/typeform-dotnet</PackageProjectUrl>
+    <RepositoryBranch>main</RepositoryBranch>
+    <RepositoryUrl>http://github.com/kamranayub/typeform-dotnet</RepositoryUrl>
+    <PackageTags>typeform dotnet forms surveys videoask opinions feedback</PackageTags>
+    <PackageIconUrl>https://www.typeform.com/apple-touch-icon.png</PackageIconUrl>
+    <PackageReleaseNotes>See https://github.com/kamranayub/typeform-dotnet/releases</PackageReleaseNotes>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <OutputPath>lib</OutputPath>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">

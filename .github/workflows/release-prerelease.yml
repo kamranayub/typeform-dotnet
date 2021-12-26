@@ -17,7 +17,7 @@ jobs:
     - name: Set VERSION variable from tag
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
     - name: Pack
-      run: dotnet pack -c Release Typeform/Typeform.csproj /p:Version=${VERSION} -p:NuspecFile=Typeform.nuspec --output .
+      run: dotnet pack -c Release Typeform/Typeform.csproj /p:Version=${VERSION} --output .
     - name: Push
       run: dotnet nuget push Typeform.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN}
       env:
