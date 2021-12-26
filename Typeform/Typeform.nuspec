@@ -25,6 +25,7 @@
 
         <!-- The icon is used in Visual Studio's package manager UI -->
         <iconUrl>https://www.typeform.com/apple-touch-icon.png</iconUrl>
+        <icon>https://www.typeform.com/apple-touch-icon.png</icon>
 
         <!-- 
             If true, this value prompts the user to accept the license when
