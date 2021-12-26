@@ -174,8 +174,33 @@ Use `ITypeformApi.DeleteResponsesAsync()` and pass a list of response IDs to del
 
 ## Retrieve Response File
 
-Uploaded files to a form can be downloaded via the REST API, however, you **cannot** rely on the values of `file_url`
-in Form Responses. Instead, you can manually specify the `form_id`, `response_id`, `field_id` and `filename` to download
+Uploaded files to a form can be downloaded via the REST API. 
+
+### Retrieve file by `file_url`
+
+The [Typeform docs](https://developer.typeform.com/responses/JSON-response-explanation/) specify that you **cannot** rely on the values of `file_url` in Form Responses to have a consistent structure.
+
+However, I have found that many `file_url` values _do match_ the REST endpoint path value. To accommodate this, I've added an extension method `GetFormResponseFileStreamFromUrlAsync` which you can use to pass a `FileUrl` value directly and attempt to download a file.
+
+```c#
+ITypeformApi typeformApi = TypeformClient.CreateApi();
+
+var responses = await typeformApi.GetFormResponsesAsync(accessToken, formId);
+var uploadFileAnswer = responses.Items[0].Answers.GetAnswerByRef<TypeformAnswerFileUrl>("my_custom_upload_ref");
+
+ApiResponse<Stream> fileResponse = await typeformApi.GetFormResponseFileStreamFromUrlAsync(
+  accessToken,
+  uploadFileAnswer.FileUrl
+);
+
+var contents = await fileResponse.ReadAllBytesAsync(/* chunkSize: <optional value in bytes> */);
+
+await System.IO.File.WriteAllBytesAsync(filename, contents);
+```
+
+### Retrieve file by parameters
+
+You can also manually specify the `form_id`, `response_id`, `field_id` and `filename` to download
 using `ITypeformApi.GetFormResponseFileStreamAsync()`.
 
 The return value of this method is a Refit `ApiResponse<Stream>` and you can manipulate the `Stream` response any way

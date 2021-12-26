@@ -32,6 +32,8 @@ public interface ITypeformApi
   /// <summary>
   /// Delete responses to a form.
   /// </summary>
+  /// <param name="accessToken">The OAuth or Personal Access Token to authorize the call</param>
+  /// <param name="formId">The form ID to access</param>
   /// <param name="includedResponseIds">List of response_id values of the responses to delete. You can list up to 1000 tokens.</param>
   [Delete("/forms/{formId}/responses")]
   Task<TypeformResponseItems> DeleteFormResponsesAsync(
@@ -40,9 +42,15 @@ public interface ITypeformApi
     [AliasAs("included_response_ids")] string[] includedResponseIds);
 
   /// <summary>
-  /// Delete responses to a form.
+  /// Retrieves a file stream from Typeform Form response. Use <see cref="TypeformStreamExtensions.ReadAllBytesAsync" /> to read all bytes
+  /// at once.
   /// </summary>
-  /// <param name="includedResponseIds">List of response_id values of the responses to delete. You can list up to 1000 tokens.</param>
+  /// <param name="accessToken">The OAuth or Personal Access Token to authorize the call</param>
+  /// <param name="formId">The form ID to access</param>
+  /// <param name="responseId">The response ID to access</param>
+  /// <param name="fieldId">The response field ID that holds the file upload</param>
+  /// <param name="filename">The filename to access</param>
+  /// <returns></returns>
   [Get("/forms/{formId}/responses/{responseId}/fields/{fieldId}/files/{filename}")]
   Task<ApiResponse<Stream>> GetFormResponseFileStreamAsync(
     [Authorize("Bearer")] string accessToken,
@@ -52,53 +60,53 @@ public interface ITypeformApi
     string filename);
 }
 
-public static class TypeformStreamExtensions
+public static class TypeformApiExtensions
 {
 
   /// <summary>
-  /// Default chunk size in bytes to read
+  /// Attempts to retrieve an uploaded file from its URL provided by the Typeform API. *Officially*, this is "not supported"
+  /// but in many circumstances, the <c>file_url</c> value returned by Typeform follows the convention of the REST API endpoint.
   /// </summary>
-  public const int DefaultStreamChunkSizeInBytes = 1024 * 4096;
-
-  /// <summary>
-  /// Reads from an Http response stream in chunks, returning all bytes.
-  /// </summary>
-  /// <param name="response">The Refit API response from Typeform containing a response stream</param>
-  /// <param name="chunkBytes">The chunk size to read in bytes until the end of the stream (default: 4MB)</param>
+  /// <param name="api">The <see cref="ITypeformApi" /> reference</param>
+  /// <param name="accessToken">The OAuth or Personal Access Token to authorize</param>
+  /// <param name="fileUrl">A <c>file_url</c> in the format returned by Typeform Responses API</param>
   /// <returns></returns>
-  public static async Task<byte[]> ReadAllBytesAsync(this ApiResponse<Stream> response, int chunkBytes = DefaultStreamChunkSizeInBytes)
+  public static Task<ApiResponse<Stream>> GetFormResponseFileStreamFromUrlAsync(
+    this ITypeformApi api,
+    string accessToken,
+    Uri fileUri
+  )
   {
-    IEnumerable<byte> contents = new byte[0];
-    int lastRead;
+    // Attempt to parse the file URL into its constituent parts
+    var uriPath = fileUri.GetComponents(UriComponents.Path, UriFormat.Unescaped);
+    var uriParts = uriPath.Split('/');
 
-    do
+    if (uriParts.Length < 8)
     {
-      var (readCount, buffer) = await ReadChunkAsync(response.Content, chunkBytes);
-      lastRead = readCount;
-      contents = contents.Concat(buffer);
-    } while (lastRead > 0);
-
-    return contents.ToArray();
-  }
-
-  private static async Task<(int readCount, byte[] buffer)> ReadChunkAsync(Stream stream, int chunkBytes)
-  {
-    var chunkBuffer = new byte[chunkBytes];
-    var totalBytesRead = 0;
-
-    while (totalBytesRead < chunkBytes)
-    {
-      var bytesRead = await stream.ReadAsync(chunkBuffer, totalBytesRead, chunkBytes - totalBytesRead);
-
-      if (bytesRead == 0)
-      {
-        break;
-      }
-
-      totalBytesRead += bytesRead;
+      throw new ArgumentException("File URI does not contain enough parts to match Typeform REST endpoint.", nameof(fileUri));
     }
 
-    return (totalBytesRead, chunkBuffer);
+    var formId = uriParts[1];
+    var responseId = uriParts[3];
+    var fieldId = uriParts[5];
+    var filename = uriParts[7];
+
+    return api.GetFormResponseFileStreamAsync(accessToken, formId, responseId, fieldId, filename);
+  }
+}
+
+public static class TypeformStreamExtensions
+{
+  /// <summary>
+  /// Reads the HTTP file stream using <see cref="System.IO.MemoryStream" />, returning all bytes.
+  /// </summary>
+  /// <param name="response">The Refit API response from Typeform containing a response stream</param>
+  /// <returns></returns>
+  public static async Task<byte[]> ReadAllBytesAsync(this ApiResponse<Stream> response)
+  {
+    using var memoryStream = new MemoryStream();
+    await response.Content.CopyToAsync(memoryStream);
+    return memoryStream.ToArray();
   }
 }
 

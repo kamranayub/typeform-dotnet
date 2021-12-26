@@ -53,7 +53,28 @@ public class IntegrationTests
 
     var contents = await fileResponse.ReadAllBytesAsync();
     Assert.NotNull(contents);
-    Assert.Equal(1_699_840, contents.Length);
+    Assert.Equal(1_692_347, contents.Length);
+
+    // write to file system
+    // await System.IO.File.WriteAllBytesAsync("test.zip", contents);
+  }
+
+  [Fact]
+  public async Task Client_Can_Download_File_Using_File_Url_From_Responses_Api()
+  {
+    var accessToken = Configuration["TypeformAccessToken"];
+
+    // TODO: This file_url is available in the response
+    // and it would be nice to figure out how to pass
+    // that in and get the downloaded file
+    var fileResponse = await _api.GetFormResponseFileStreamFromUrlAsync(
+      accessToken,
+      new System.Uri("https://api.typeform.com/forms/Mj5yRSHu/responses/8kvscilox7xp42d58c8kvsc39l6ct2rg/fields/a6MMDcSis1p1/files/c001c8c70d77-derwinternaht.zip")
+    );
+
+    var contents = await fileResponse.ReadAllBytesAsync();
+    Assert.NotNull(contents);
+    Assert.Equal(1_692_347, contents.Length);
 
     // write to file system
     // await System.IO.File.WriteAllBytesAsync("test.zip", contents);
