@@ -12,9 +12,9 @@
     <Authors>Kamran Ayub</Authors>
     <Copyright>Copyright 2021 Kamran Ayub</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>http://github.com/kamranayub/typeform-dotnet</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/kamranayub/typeform-dotnet</PackageProjectUrl>
     <RepositoryBranch>main</RepositoryBranch>
-    <RepositoryUrl>http://github.com/kamranayub/typeform-dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/kamranayub/typeform-dotnet</RepositoryUrl>
     <PackageTags>typeform dotnet forms surveys videoask opinions feedback</PackageTags>
     <PackageIconUrl>https://www.typeform.com/apple-touch-icon.png</PackageIconUrl>
     <PackageReleaseNotes>See https://github.com/kamranayub/typeform-dotnet/releases</PackageReleaseNotes>
