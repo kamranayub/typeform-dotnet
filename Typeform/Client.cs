@@ -37,6 +37,7 @@ public class TypeformClient
   /// <value></value>
   public static RefitSettings DefaultSettings => new RefitSettings
   {
+    CollectionFormat = CollectionFormat.Csv,
     ContentSerializer = new SystemTextJsonContentSerializer(DefaultSystemTextJsonSerializerOptions)
   };
 
@@ -66,4 +67,6 @@ public class TypeformClient
 
     return typeformApi;
   }
+
+  
 }

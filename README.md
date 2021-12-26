@@ -4,7 +4,9 @@ A .NET Standard 2.0 SDK wrapper built with [Refit](https://github.com/reactiveui
 
 ## Supported Endpoints
 
-- [Retrieve Responses](https://developer.typeform.com/responses/reference/retrieve-responses/) (https://api.typeform.com/forms/{form_id}/responses)
+- [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
+- [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
+- [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
 
 ## Usage
 
@@ -63,7 +65,9 @@ public class HomeController : Controller {
 }
 ```
 
-## Responses API
+# Responses API
+
+## Retrieve Responses
 
 The Typeform Responses API returns form responses that include answers. Each answer can be a different type and to accomodate this, the SDK deserializes into different class implementations based on the answer `type` discriminator.
 
@@ -164,6 +168,62 @@ var responses = await _typeformApi.GetFormResponsesAsync(accessToken, formId);
 var answerText = responses.Items[0].Variables.GetVariable<TypeformVariableText>("name");
 ```
 
+## Delete Responses
+
+Use `ITypeformApi.DeleteResponsesAsync()` and pass a list of response IDs to delete.
+
+## Retrieve Response File
+
+Uploaded files to a form can be downloaded via the REST API. 
+
+### Retrieve file by `file_url`
+
+The [Typeform docs](https://developer.typeform.com/responses/JSON-response-explanation/) specify that you **cannot** rely on the values of `file_url` in Form Responses to have a consistent structure.
+
+However, I have found that many `file_url` values _do match_ the REST endpoint path value. To accommodate this, I've added an extension method `GetFormResponseFileStreamFromUrlAsync` which you can use to pass a `FileUrl` value directly and attempt to download a file.
+
+```c#
+ITypeformApi typeformApi = TypeformClient.CreateApi();
+
+var responses = await typeformApi.GetFormResponsesAsync(accessToken, formId);
+var uploadFileAnswer = responses.Items[0].Answers.GetAnswerByRef<TypeformAnswerFileUrl>("my_custom_upload_ref");
+
+ApiResponse<Stream> fileResponse = await typeformApi.GetFormResponseFileStreamFromUrlAsync(
+  accessToken,
+  uploadFileAnswer.FileUrl
+);
+
+var contents = await fileResponse.ReadAllBytesAsync(/* chunkSize: <optional value in bytes> */);
+
+await System.IO.File.WriteAllBytesAsync(filename, contents);
+```
+
+### Retrieve file by parameters
+
+You can also manually specify the `form_id`, `response_id`, `field_id` and `filename` to download
+using `ITypeformApi.GetFormResponseFileStreamAsync()`.
+
+The return value of this method is a Refit `ApiResponse<Stream>` and you can manipulate the `Stream` response any way
+you see fit. There is a `ReadAllBytesAsync()` extension method that will read the full bytes using a chunked buffer:
+
+```c#
+ITypeformApi typeformApi = TypeformClient.CreateApi();
+
+ApiResponse<Stream> fileResponse = await typeformApi.GetFormResponseFileStreamAsync(
+  accessToken,
+  formId,
+  responseId,
+  fieldId,
+  filename
+);
+
+var contents = await fileResponse.ReadAllBytesAsync(/* chunkSize: <optional value in bytes> */);
+
+await System.IO.File.WriteAllBytesAsync(filename, contents);
+```
+
+If you need to download a file using a `FileUrl` value from the Form Responses API, you will need to construct your own `HttpClient` to download it [like this example](https://dev.to/1001binary/download-file-using-httpclient-wrapper-asynchronously-1p6).
+
 ## TODO
 
 - [x] Create a basic API client
@@ -173,8 +233,8 @@ var answerText = responses.Items[0].Variables.GetVariable<TypeformVariableText>(
 - [x] Target .NET Standard / maximize compatibility
 - [ ] Support for [Responses API](https://developer.typeform.com/responses/)
   - [x] [Retrieve responses](https://developer.typeform.com/responses/reference/retrieve-responses/)
-  - [ ] [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
-  - [ ] [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
+  - [x] [Delete responses](https://developer.typeform.com/responses/reference/delete-responses/)
+  - [x] [Retrieve response file](https://developer.typeform.com/responses/reference/retrieve-response-file/)
   - [ ] [Retrieve Form Insights](https://developer.typeform.com/responses/reference/retrieve-form-insights/)
 - [ ] Support for [Webhooks API](https://developer.typeform.com/webhooks/)
 - [ ] Support for [Create API](https://developer.typeform.com/create/)
