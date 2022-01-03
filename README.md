@@ -41,7 +41,7 @@ using Typeform;
 var client = TypeformClient.CreateApi();
 ```
 
-### Services / Dependency Injection
+### .NET Service Injection
 
 ```c#
 using Typeform;
@@ -51,6 +51,16 @@ using Typeform;
 
 // You can always do this
 services.AddRefitClient<ITypeformApi>(TypeformClient.DefaultSettings);
+```
+
+
+### Other DI Containers
+
+```c#
+using Typeform;
+
+// Ninject
+kernel.Bind<ITypeformApi>().ToMethod(ctx => TypeformClient.CreateApi()).InSingletonScope();
 ```
 
 ### Customizing Refit Settings
