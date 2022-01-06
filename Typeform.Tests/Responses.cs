@@ -107,6 +107,15 @@ public class ResponsesTests
   }
 
   [Fact]
+  public void Can_Check_If_Variable_Exists()
+  {
+    var response = GetResponseFromFixture(0);
+    var variableExists = response.Variables.ContainsKey("name");
+
+    Assert.True(variableExists);
+  }
+
+  [Fact]
   public void Deserializes_Response_Metadata()
   {
     var response = GetResponseFromFixture(0);
