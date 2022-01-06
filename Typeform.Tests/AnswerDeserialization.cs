@@ -110,13 +110,15 @@ public class AnswerDeserializationTests
     {
       Amount = "$1.00",
       Name = "Franz Tester",
-      Last4 = "1234"
+      Last4 = "1234",
+      Completed = true
     };
 
     Assert.Equal(TypeformAnswerType.Payment, answer.Type);
     Assert.Equal(expectedPaymentData.Amount, answer.Payment.Amount);
     Assert.Equal(expectedPaymentData.Name, answer.Payment.Name);
     Assert.Equal(expectedPaymentData.Last4, answer.Payment.Last4);
+    Assert.Equal(expectedPaymentData.Completed, answer.Payment.Completed);
   }
 
   [Fact]

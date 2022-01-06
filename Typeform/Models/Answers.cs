@@ -22,6 +22,11 @@ public enum TypeformAnswerType
 
 public class TypeformAnswer
 {
+  public TypeformAnswer()
+  {
+    Field = new TypeformFieldReference();
+  }
+
   public TypeformFieldReference Field { get; set; }
 
   public TypeformAnswerType Type { get; set; }
@@ -105,4 +110,6 @@ public class TypeformAnswerPaymentData
   public string Last4 { get; set; }
 
   public string Name { get; set; }
+
+  public bool? Completed { get; set; }
 }

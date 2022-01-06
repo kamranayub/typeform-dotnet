@@ -158,7 +158,8 @@
           "payment": {
             "amount": "$1.00",
             "last4": "1234",
-            "name": "Franz Tester"
+            "name": "Franz Tester",
+            "completed": true
           },
           "field": {
             "id": "o393jfksd93jfhdhf",
