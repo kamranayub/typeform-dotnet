@@ -23,18 +23,18 @@ public class IntegrationTests
   }
 
   [Fact]
-  public async Task Client_Receives_A_200_Success_From_Responses_Api()
+  public async Task Client_FormResponses_Api_Should_Return_Submitted_Responses()
   {
     var accessToken = Configuration["TypeformAccessToken"];
     var responses = await _api.GetFormResponsesAsync(
       accessToken,
       "xVMHX23n");
 
-    Assert.True(responses.TotalItems > 0);
+    Assert.Equal(36, responses.TotalItems);
   }
 
   [Fact]
-  public async Task Client_FormResponses_Api_Supports_Query_Parameter() {
+  public async Task Client_FormResponses_Api_Should_Filter_By_Query_Data() {
 var accessToken = Configuration["TypeformAccessToken"];
     var responses = await _api.GetFormResponsesAsync(
       accessToken,
@@ -44,6 +44,19 @@ var accessToken = Configuration["TypeformAccessToken"];
       });
 
     Assert.Equal(1, responses.TotalItems);
+  }
+
+  [Fact]
+  public async Task Client_FormResponses_Api_Should_Return_Unsubmitted_Responses() {
+var accessToken = Configuration["TypeformAccessToken"];
+    var responses = await _api.GetFormResponsesAsync(
+      accessToken,
+      "xVMHX23n",
+      new TypeformGetResponsesParameters() {
+        Completed = false
+      });
+
+    Assert.Equal(40, responses.TotalItems);
   }
 
   [Fact]
