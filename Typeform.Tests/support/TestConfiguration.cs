@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Typeform.Tests;
 
-public static class TestConfigurationBuilder
+public class TestConfiguration
 {
   public static TestConfiguration Build()
   {
@@ -12,13 +12,10 @@ public static class TestConfigurationBuilder
 
     return new TestConfiguration(secrets);
   }
-}
 
-public class TestConfiguration
-{
-  internal TestConfiguration(IConfiguration configuration) {
+  private TestConfiguration(IConfiguration configuration) {
     TypeformAccessToken = configuration["TypeformAccessToken"];
   }
 
-  public string TypeformAccessToken { get; set; }
+  public string TypeformAccessToken { get; }
 }

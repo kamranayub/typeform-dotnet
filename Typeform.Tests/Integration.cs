@@ -8,7 +8,7 @@ public class IntegrationTests
 {
   public IntegrationTests()
   {
-    Configuration = TestConfigurationBuilder.Build();
+    Configuration = TestConfiguration.Build();
     Api = TypeformClient.CreateApi();
   }
 
