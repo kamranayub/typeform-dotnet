@@ -120,6 +120,7 @@ public class TypeformGetResponsesParameters
   /// or before/after query parameters to narrow the scope of your request.
   /// </summary>
   /// <value></value>
+  [AliasAs("page_size")]
   public int? PageSize { get; set; }
 
   /// <summary>
@@ -128,6 +129,7 @@ public class TypeformGetResponsesParameters
   /// to the second, with T as a delimiter between the date and time (2020-03-20T14:00:59).
   /// </summary>
   /// <value></value>
+  [AliasAs("since")]
   public string Since { get; set; }
 
   /// <summary>
@@ -136,6 +138,7 @@ public class TypeformGetResponsesParameters
   /// to the second, with T as a delimiter between the date and time (2020-03-20T14:00:59).
   /// </summary>
   /// <value></value>
+  [AliasAs("until")]
   public string Until { get; set; }
 
   /// <summary>
@@ -145,6 +148,7 @@ public class TypeformGetResponsesParameters
   /// that you can traverse the complete set of responses without repeating entries.
   /// </summary>
   /// <value></value>
+  [AliasAs("after")]
   public string After { get; set; }
 
   /// <summary>
@@ -154,6 +158,7 @@ public class TypeformGetResponsesParameters
   /// you can traverse the complete set of responses without repeating entries.
   /// </summary>
   /// <value></value>
+  [AliasAs("before")]
   public string Before { get; set; }
 
   /// <summary>
@@ -161,12 +166,14 @@ public class TypeformGetResponsesParameters
   /// Use a comma-separated list to specify more than one response_id value.
   /// </summary>
   /// <value></value>
+  [AliasAs("included_response_ids")]
   public string[] IncludedResponseIds { get; set; }
 
   /// <summary>
   /// Comma-separated list of response_ids to be excluded from the response.
   /// </summary>
   /// <value></value>
+  [AliasAs("excluded_response_ids")]
   public string[] ExcludedResponseIds { get; set; }
 
   /// <summary>
@@ -175,7 +182,8 @@ public class TypeformGetResponsesParameters
   /// submitted_at, otherwise - landed_at.
   /// </summary>
   /// <value></value>
-  public bool Completed { get; set; }
+  [AliasAs("completed")]
+  public bool? Completed { get; set; }
 
   /// <summary>
   /// Responses order in {fieldID},{asc|desc} format. 
@@ -184,6 +192,7 @@ public class TypeformGetResponsesParameters
   /// Default value is submitted_at,desc.
   /// </summary>
   /// <value></value>
+  [AliasAs("sort")]
   public string Sort { get; set; }
 
   /// <summary>
@@ -192,6 +201,7 @@ public class TypeformGetResponsesParameters
   /// fields, hidden fields and variables values.
   /// </summary>
   /// <value></value>
+  [AliasAs("query")]
   public string Query { get; set; }
 
   /// <summary>
@@ -200,6 +210,7 @@ public class TypeformGetResponsesParameters
   /// comma-separated list to specify more than one field value.
   /// </summary>
   /// <value></value>
+  [AliasAs("fields")]
   public string[] Fields { get; set; }
 
   /// <summary>
@@ -208,5 +219,6 @@ public class TypeformGetResponsesParameters
   /// one field value - response will contain at least one of the specified fields.
   /// </summary>
   /// <value></value>
+  [AliasAs("answered_fields")]
   public string[] AnsweredFields { get; set; }
 }

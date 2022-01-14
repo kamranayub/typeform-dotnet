@@ -22,8 +22,6 @@ public class IntegrationTests
     _api = TypeformClient.CreateApi();
   }
 
-  // TODO: Categorize as integration test
-  // TODO: Don't run in CI
   [Fact]
   public async Task Client_Receives_A_200_Success_From_Responses_Api()
   {
@@ -33,6 +31,19 @@ public class IntegrationTests
       "xVMHX23n");
 
     Assert.True(responses.TotalItems > 0);
+  }
+
+  [Fact]
+  public async Task Client_FormResponses_Api_Supports_Query_Parameter() {
+var accessToken = Configuration["TypeformAccessToken"];
+    var responses = await _api.GetFormResponsesAsync(
+      accessToken,
+      "xVMHX23n",
+      new TypeformGetResponsesParameters() {
+        Query = "SirRainJack"
+      });
+
+    Assert.Equal(1, responses.TotalItems);
   }
 
   [Fact]
