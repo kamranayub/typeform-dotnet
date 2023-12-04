@@ -33,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Macross.Json.Extensions" Version="2.2.0" />
-    <PackageReference Include="Refit" Version="6.1.15" />
+    <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
+    <PackageReference Include="Refit" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
