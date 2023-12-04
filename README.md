@@ -1,6 +1,6 @@
 # typeform-dotnet
 
-[![.NET](https://github.com/kamranayub/typeform-dotnet/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/kamranayub/typeform-dotnet/actions/workflows/dotnet.yml) [![Nuget](https://img.shields.io/nuget/v/Typeform)](https://nuget.org/packages/Typeform) [![Nuget](https://img.shields.io/nuget/dt/Typeform?label=nuget%20downloads)](https://nuget.org/packages/Typeform)
+[![.NET](https://github.com/kamranayub/typeform-dotnet/actions/workflows/dotnet.yml/badge.svg)](https://github.com/kamranayub/typeform-dotnet/actions/workflows/dotnet.yml) [![Nuget](https://img.shields.io/nuget/v/Typeform)](https://nuget.org/packages/Typeform) [![Nuget](https://img.shields.io/nuget/dt/Typeform?label=nuget%20downloads)](https://nuget.org/packages/Typeform)
 
 A .NET Standard 2.0 SDK wrapper built with [Refit](https://github.com/reactiveui/refit) around Typeform's API.
 
