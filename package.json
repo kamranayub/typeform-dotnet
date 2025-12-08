@@ -24,19 +24,27 @@
   },
   "homepage": "https://github.com/kamranayub/typeform-dotnet#readme",
   "devDependencies": {
-    "semantic-release": "^18.0.1",
-    "semantic-release-nuget": "^1.1.1"
+    "semantic-release": "25.0.2",
+    "semantic-release-nuget": "1.1.1"
   },
   "release": {
-    "branches": ["main", "publish"],
+    "branches": [
+      "main",
+      "publish"
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "./plugins/prepare-nuget-release.js",
-      ["semantic-release-nuget", {
-        "pushUrl": "https://api.nuget.org/v3/index.json",
-        "packArguments": ["/p:Version=${NUGET_VERSION}"]
-      }],
+      [
+        "semantic-release-nuget",
+        {
+          "pushUrl": "https://api.nuget.org/v3/index.json",
+          "packArguments": [
+            "/p:Version=${NUGET_VERSION}"
+          ]
+        }
+      ],
       [
         "@semantic-release/github",
         {
